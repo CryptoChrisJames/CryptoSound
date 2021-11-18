@@ -1,0 +1,9 @@
+@font-face {
+    font-family: "Roboto";
+    src: local("Roboto"),
+        url(~assets/fonts/Roboto/Roboto-Thin.ttf) format("truetype");
+}
+
+html {
+    font-family: "Roboto";
+}
