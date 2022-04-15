@@ -2,14 +2,14 @@ import config from '../config';
 const contentful = require('contentful');
 
 export default ({ store }, inject) => {
-    const contenfulConfig = {
+    const contentfulConfig = {
         space: config.currentContentfulSpace(),
         accessToken: config.currentContentfulToken(),
         environment: config.currentContentfulEnv(),
     };
 
     const client = () => {
-        return contentful.createClient(contenfulConfig);
+        return contentful.createClient(contentfulConfig);
     };
 
     const getLogo = async () => {

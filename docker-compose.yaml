@@ -1,0 +1,18 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  cs-ui:
+    container_name: cs-ui
+    build: 
+      context: ./src/CryptoSoundUI
+      dockerfile: Dockerfile.local
+    ports:
+      - "8000:8000"
+    volumes:
+      - $HOME/.aws/:/home/.aws/:ro
+      - ./src/CryptoSoundUI/:/app
+    environment:      
+      AWS_REGION: "us-east-1"
+  #   links:
+  #     - redis
+  # redis:
+  #   image: redis
