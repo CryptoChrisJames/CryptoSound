@@ -12,7 +12,17 @@ services:
       - ./src/CryptoSoundUI/:/app
     environment:      
       AWS_REGION: "us-east-1"
-  #   links:
-  #     - redis
-  # redis:
-  #   image: redis
+    links:
+      - cs-api
+  cs-api:
+    container_name: cs-api
+    build: 
+      context: ./src/CryptoSoundAPI
+      dockerfile: Dockerfile.local
+    ports:
+      - "8100:8100"
+    volumes:
+      - $HOME/.aws/:/home/.aws/:ro
+      - ./src/CryptoSoundAPI/:/app
+    environment:      
+      AWS_REGION: "us-east-1"

@@ -4,6 +4,7 @@
   "description": "TS Espress API for Crypto Sound website. ",
   "main": "api.js",
   "scripts": {
+    "dev": "nodemon api.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Christopher Smith",
@@ -15,5 +16,8 @@
     "mongodb": "^4.5.0",
     "stripe": "^8.217.0",
     "typescript": "^4.6.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
