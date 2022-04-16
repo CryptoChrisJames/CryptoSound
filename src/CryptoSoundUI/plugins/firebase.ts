@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import config from '../config.js';
 import { initializeApp, getApps } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
@@ -21,12 +22,12 @@ if(!apps.length) {
     firebaseApp = apps[0];
 }
 
-export default ({store}, inject) => {
-    const signIn = async (email, password) => {
-        return await signInWithEmailAndPassword(getAuth(), email, password);
-    };
+declare module 'vue/types/vue' {
+    interface Vue {
+        $signIn(email: string, password: string): any 
+    }
+}
 
-    inject('firebase', {
-        signIn,
-    });
+Vue.prototype.$signIn = async (email: string, password: string) => {
+    return await signInWithEmailAndPassword(getAuth(), email, password);
 };

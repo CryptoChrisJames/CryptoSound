@@ -37,7 +37,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/contentful.js',
-    '~/plugins/firebase.js',
+    '~/plugins/firebase.ts',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
