@@ -60,6 +60,10 @@ export default Vue.extend({
                 console.log(signinResponse);
                 var user = new User(signinResponse.user.email, signinResponse.user.accessToken);
                 this.$store.commit('user/setCurrentUser', user);
+                this.$cookies.set('accessToken', signinResponse.user.accessToken, {
+                    maxAge: 60 * 60 * 24 * 7
+                });
+                this.$router.push("/");
             } catch(err) {
                 console.log(err);
             }
