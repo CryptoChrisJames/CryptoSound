@@ -7,11 +7,13 @@
       <Logo/>
       <Burger/>
     </div>
-    <Sidebar>
+    <Sidebar @click="closeNav()">
       <ul class="sidebar-panel-nav">
-          <li><router-link to="/">Home</router-link></li>
-          <li><router-link to="/beats">Beats</router-link></li>
-          <li><router-link to="/kits">Kits</router-link></li>
+        <li @click="closeNav()"><router-link to="/">Home</router-link></li>
+        <li @click="closeNav()"><router-link to="/beats" @click="closeNav()">Beats</router-link></li>
+        <li @click="closeNav()"><router-link to="/kits" @click="closeNav()">Kits</router-link></li>
+        <li @click="closeNav()" v-if="userSignedIn == null"><router-link to="/auth/login" @click="closeNav()">Login</router-link></li>
+        <li v-else><v-btn @click="logout()"> Logout </v-btn></li>
       </ul>
     </Sidebar>
   </div>
@@ -52,6 +54,9 @@ export default {
     aboutPage() {
       return this.$route.fullPath.includes("about");
     },
+    userSignedIn() {
+      return this.$store.state.user.user;
+    }
   },
   mounted() {
       window.addEventListener('scroll', this.onScroll);
@@ -74,6 +79,19 @@ export default {
       this.showNav = currentScrollPosition < this.lastScrollPosition;
       this.lastScrollPosition = currentScrollPosition;
     },
+    closeNav() {
+      this.$store.commit("toggleNav");
+    },
+    logout() {
+      this.closeNav();
+      this.$firebase.logout();
+      this.$store.commit("user/logoutUser");
+      if(this.$route.fullPath != "/") {
+        this.$router.push("/");
+      } else {
+        this.$router.app.refresh();
+      }
+    }
   },
 };
 </script>

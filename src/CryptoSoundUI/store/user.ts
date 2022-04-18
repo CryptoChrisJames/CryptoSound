@@ -7,6 +7,9 @@ export const state = () => ({
 export const mutations = {
     setCurrentUser(state: any, payload: User) {
         state.user = payload;
+    },
+    logoutUser(state: any) {
+        state.user = null;
     }
 };
 

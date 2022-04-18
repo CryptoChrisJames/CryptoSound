@@ -1,7 +1,11 @@
 import Vue from 'vue';
 import config from '../config.js';
 import { initializeApp, getApps } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { 
+    getAuth, 
+    signInWithEmailAndPassword,
+    signOut
+} from 'firebase/auth';
 
 const firebaseConfig = {
     apiKey: config.firebaseAPIKey(),
@@ -22,12 +26,17 @@ if(!apps.length) {
     firebaseApp = apps[0];
 }
 
-declare module 'vue/types/vue' {
-    interface Vue {
-        $signIn(email: string, password: string): any 
-    }
-}
+export default ({store}, inject) => {
+    const signIn = async (email, password) => {
+        return await signInWithEmailAndPassword(getAuth(), email, password);
+    };
 
-Vue.prototype.$signIn = async (email: string, password: string) => {
-    return await signInWithEmailAndPassword(getAuth(), email, password);
+    const logout =  async () => {
+        await signOut(getAuth());
+    }
+
+    inject('firebase', {
+        signIn,
+        logout,
+    });
 };

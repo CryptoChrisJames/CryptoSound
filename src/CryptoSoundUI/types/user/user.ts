@@ -1,11 +1,11 @@
 export class User {
     email: string;
-    isSignedIn: boolean;
     accessToken: string;
+    uid: string;
     
-    constructor(email: string, accessToken: string) {
+    constructor(email: string, accessToken: string, uid: string) {
         this.email = email,
-        this.isSignedIn = true,
-        this.accessToken = accessToken
+        this.accessToken = accessToken,
+        this.uid = uid
     }
 }

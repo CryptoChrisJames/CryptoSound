@@ -8,7 +8,7 @@
             <label for="email" class="loginLabel"> Email </label>
             <input v-model="email" type="text" class="loginField" />
             <label for="email" class="loginLabel"> Password </label>
-            <input v-model="password" type="password" class="loginField" />
+            <input v-model="password" type="password" class="loginField" @keyup.enter="signIn()"/>
             <v-btn
                 v-if="loading == false"
                 block
@@ -30,20 +30,19 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue';
 import Buffer from '../../components/atoms/Buffer/Buffer.vue';
-import { User } from '../../types/user/user';
 
 export default Vue.extend({
     components: {
         Buffer,
     },
     data() {
-        const email: string = "";
-        const password: string = "";
-        const error: string = "";
-        const loading: boolean = false;
+        const email = "";
+        const password = "";
+        const error = "";
+        const loading = false;
 
         return {
             email,
@@ -56,13 +55,14 @@ export default Vue.extend({
         async signIn() {
             this.loading = true;
             try {
-                const signinResponse = await this.$signIn(this.email, this.password);
+                const signinResponse = await this.$firebase.signIn(this.email, this.password);
                 console.log(signinResponse);
-                var user = new User(signinResponse.user.email, signinResponse.user.accessToken);
+                var user = { 
+                    email: signinResponse.user.email, 
+                    value: signinResponse.user.accessToken,
+                    uid: signinResponse.user.uid
+                }
                 this.$store.commit('user/setCurrentUser', user);
-                this.$cookies.set('accessToken', signinResponse.user.accessToken, {
-                    maxAge: 60 * 60 * 24 * 7
-                });
                 this.$router.push("/");
             } catch(err) {
                 console.log(err);
