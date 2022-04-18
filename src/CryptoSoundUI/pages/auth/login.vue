@@ -56,7 +56,6 @@ export default Vue.extend({
             this.loading = true;
             try {
                 const signinResponse = await this.$firebase.signIn(this.email, this.password);
-                console.log(signinResponse);
                 var user = { 
                     email: signinResponse.user.email, 
                     value: signinResponse.user.accessToken,
