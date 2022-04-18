@@ -4,6 +4,7 @@ import { initializeApp, getApps } from 'firebase/app';
 import { 
     getAuth, 
     signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
     signOut
 } from 'firebase/auth';
 
@@ -31,6 +32,10 @@ export default ({store}, inject) => {
         return await signInWithEmailAndPassword(getAuth(), email, password);
     };
 
+    const signUp = async (email, password) => {
+        return await createUserWithEmailAndPassword(getAuth(), email, password);
+    };
+
     const logout =  async () => {
         await signOut(getAuth());
     }
@@ -38,5 +43,6 @@ export default ({store}, inject) => {
     inject('firebase', {
         signIn,
         logout,
+        signUp,
     });
 };
