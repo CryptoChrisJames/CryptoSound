@@ -5,8 +5,8 @@
                 <img src="~/static/images/CSLogo.png" alt="CryptoSound Logo 2" class="CSLogo2">
             </div>
         </Hero>
-        <p class="copy">Check out the latest releases!</p>
-        <CollectionCarousel></CollectionCarousel>
+        <p class="copy">Check out the latest collections!</p>
+        <CollectionCarousel :collections="collections"></CollectionCarousel>
         <Promotion
             :promotion="generalPromotion"
             :isGeneral="true"
@@ -24,9 +24,11 @@ export default Vue.extend({
     async asyncData({store}) {
         const promotions = store.state.content.promotions;
         const videoLink = store.state.content.videoHeaderLink;
+        const collections = store.state.content.collections;
         return {
             promotions,
             videoLink,
+            collections,
         };
     },
     components: {
