@@ -5,6 +5,8 @@
                 <img src="~/static/images/CSLogo.png" alt="CryptoSound Logo 2" class="CSLogo2">
             </div>
         </Hero>
+        <p class="copy">Check out the latest releases!</p>
+        <CollectionCarousel></CollectionCarousel>
         <Promotion
             :promotion="generalPromotion"
             :isGeneral="true"
@@ -16,6 +18,7 @@
 import Vue from 'vue';
 import Hero from '../components/organisms/Hero/Hero.vue';
 import Promotion from '../components/organisms/Promotion/Promotion.vue';
+import CollectionCarousel from '../components/organisms/CollectionCarousel/CollectionCarousel.vue';
 
 export default Vue.extend({
     async asyncData({store}) {
@@ -29,6 +32,7 @@ export default Vue.extend({
     components: {
         Hero,
         Promotion,
+        CollectionCarousel
     },
     computed: {
         generalPromotion() {

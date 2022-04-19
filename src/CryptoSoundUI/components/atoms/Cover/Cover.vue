@@ -25,8 +25,8 @@ export default {
 }
 
 .cover {
-    max-height: 80%;
-    max-width: 80%;
+    max-height: 100%;
+    max-width: 100%;
     width: auto;
     height: auto;
 }
