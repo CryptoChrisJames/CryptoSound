@@ -10,12 +10,8 @@
 </template>
 
 <script>
-import Logo from '../Logo/Logo.vue';
 import { mapMutations } from 'vuex';
 export default {
-    components: {
-        Logo,
-    },
     methods: {
         ...mapMutations({
             closeSidebarPanel: 'toggleNav'
