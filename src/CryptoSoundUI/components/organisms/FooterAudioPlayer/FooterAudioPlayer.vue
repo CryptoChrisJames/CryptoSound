@@ -36,20 +36,20 @@
                         <i
                             v-if="isPlaying"
                             @click="playTrackFromFooter()"
-                            class="fas fa-pause audioAction"
+                            class="fa-solid fa-pause audioAction"
                         ></i>
                         <i
                             v-else
                             @click="playTrackFromFooter()"
-                            class="fas fa-play audioAction"
+                            class="fa-solid fa-play audioAction"
                         ></i>
-                        <i @click="nextTrack()" class="fas fa-step-forward audioAction"></i>
+                        <i @click="nextTrack()" class="fa-solid fa-step-forward audioAction"></i>
                     </span>
                 </div>
                 <div v-show="!isMobile" class="volumeSection">
                     <span class="muteSection">
                         <i @click="unmute" v-if="muted || currentVolume == 0" class="fas fa-volume-off"></i>
-                        <i @click="mute" v-else class="fas fa-volume-up"></i>
+                        <i @click="mute" v-else class="fa-solid fa-volume-up"></i>
                     </span>
                     <span class="volSliderSection">
                         <input

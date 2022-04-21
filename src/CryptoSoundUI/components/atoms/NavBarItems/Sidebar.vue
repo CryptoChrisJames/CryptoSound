@@ -1,4 +1,4 @@
-<template>  
+<template>
     <div class="sidebar">
         <div class="sidebar-backdrop" @click="closeSidebarPanel" v-if="isPanelOpen"></div>
         <transition name="slide">
@@ -22,7 +22,7 @@ export default {
         }),
     },
     computed: {
-        isPanelOpen() {            
+        isPanelOpen() {
             return this.$store.state.isNavOpen;
         },
     },

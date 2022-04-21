@@ -23,8 +23,8 @@
                             <div class="trackCreator">{{ currentCollection.creator }}</div>
                         </div>
                         <div class="trackStatusWrapper">
-                            <i v-if="currentTrackSelected == t.id && isPlaying" class="fas fa-pause"></i>
-                            <i v-else class="fas fa-play"></i>
+                            <i v-if="currentTrackSelected == t.id && isPlaying" class="fa-solid fa-pause"></i>
+                            <i v-else class="fa-solid fa-play"></i>
                         </div>
                     </div>
                 </li>

@@ -7,7 +7,7 @@
                 <span class="burger-bar burger-bar--3"></span>
             </button>
         </slot>
-    </div>  
+    </div>
 </template>
 
 <script>
@@ -41,7 +41,7 @@ button:focus {
 .burger-button {
     position: relative;
     height: 50px;
-    width: 55px;
+    width: 40px;
     display: block;
     z-index: 999;
     border: 0;

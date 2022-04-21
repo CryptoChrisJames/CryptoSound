@@ -10,7 +10,7 @@
             <li
                 class="collection-wrapper"
             >
-                <img :src="obj.cover" :alt="cover" class="collection-image">
+                <img :src="obj.cover" :alt="`Cover for the project ${obj.name}`" class="collection-image">
                 <div class="collection-info-wrapper">
                     <p class="collection-info">{{ obj.name }}</p>
                 </div>
@@ -63,6 +63,14 @@ export default {
     overflow-x: scroll;
     white-space: nowrap;
     display: block;
+    overflow: -moz-scrollbars-none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.horizontal-menu::-webkit-scrollbar {
+    width: 0 !important;
+    display: none;
 }
 
 .collection-wrapper {

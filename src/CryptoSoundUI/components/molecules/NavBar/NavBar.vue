@@ -5,7 +5,14 @@
       :class="[{'navbar-hidden': !showNav}, {'clearNav' : clearNav}]"
     >
       <Logo/>
-      <Burger/>
+      <div class="functionIcons">
+        <v-row>
+          <div class="cart-icon-wrapper" @click="toggleCart">
+            <i class="fa-solid fa-cart-shopping centering"></i>
+          </div>
+          <Burger/>
+        </v-row>
+      </div>
     </div>
     <Sidebar @click="closeNav()">
       <ul class="sidebar-panel-nav">
@@ -56,17 +63,18 @@ export default {
     },
     userSignedIn() {
       return this.$store.state.user.user;
-    }
+    },
   },
   mounted() {
       window.addEventListener('scroll', this.onScroll);
   },
   beforeDestroy() {
       window.removeEventListener('scroll', this.onScroll);
-  },  
+  },
   methods: {
     ...mapMutations({
-            toggleNav: 'toggleNav'
+            toggleNav: 'toggleNav',
+            toggleCart: 'cart/toggleCart'
         }),
     onScroll() {
       const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
@@ -81,6 +89,7 @@ export default {
     },
     closeNav() {
       this.$store.commit("toggleNav");
+      this.showCart = false;
     },
     logout() {
       this.closeNav();
@@ -91,7 +100,7 @@ export default {
       } else {
         this.$router.app.refresh();
       }
-    }
+    },
   },
 };
 </script>
@@ -104,7 +113,6 @@ export default {
   background-color:#111116;
   position: fixed;
   z-index: 999;
-  font-family: 'Montserrat', sans-serif;
   max-width: 1600px;
   width: 100%;
   display: flex;
@@ -113,9 +121,26 @@ export default {
   justify-content: space-between;
   -webkit-box-align: center;
   align-items: center;
-  padding: 0 25px;
+  padding: 0 20px;
   transform: translate3d(0, 0, 0);
   transition: 0.3s all ease-out;
+}
+
+.functionIcons {
+  width: auto;
+  height: auto;
+  display: inline-block;
+}
+
+.cart-icon-wrapper {
+  display: table;
+  margin-right: 17px;
+}
+
+.centering {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
 }
 
 ul.sidebar-panel-nav {
