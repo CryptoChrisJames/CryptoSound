@@ -1,6 +1,7 @@
 <template>
     <div>
         <nav-bar />
+        <cart />
         <nuxt />
         <bottom-buffer />
         <footer-audio-player />
@@ -11,7 +12,7 @@
 import BottomBuffer from '../components/atoms/Buffer/BottomBuffer.vue';
 import navBar from '../components/molecules/NavBar/NavBar.vue';
 import footerAudioPlayer from '../components/organisms/FooterAudioPlayer/FooterAudioPlayer.vue';
-import Vue from 'vue';
+import Cart from '../components/organisms/Cart/Cart.vue';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 export default {
@@ -19,6 +20,7 @@ export default {
         navBar,
         footerAudioPlayer,
         BottomBuffer,
+        Cart,
     },
     mounted() {
         this.setupFirebase()
@@ -27,8 +29,8 @@ export default {
         setupFirebase() {
             onAuthStateChanged(getAuth(), user => {
                 if(user) {
-                    var currentUser = { 
-                        email: user.email, 
+                    var currentUser = {
+                        email: user.email,
                         value: user.accessToken,
                         uid: user.uid
                     }

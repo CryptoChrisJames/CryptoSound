@@ -31,6 +31,7 @@ import isMobile from 'is-mobile';
 import Burger from '../../atoms/NavBarItems/Burger.vue';
 import Sidebar from '../../atoms/NavBarItems/Sidebar.vue';
 import Logo from '../../atoms/Logo/Logo.vue';
+import Cart from '../../organisms/Cart/Cart.vue';
 import { mapMutations } from 'vuex';
 
 export default {
