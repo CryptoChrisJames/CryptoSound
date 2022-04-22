@@ -1,9 +1,9 @@
 <template>
     <div class="promotionWrapper">
+        <section-head>Current PRomotion</section-head>
+        <p class="promoDesc">{{ promotion.promotionDesc }}</p>
         <a href="#" @click.prevent="goToPage()">
-            <section-head>{{ promotion.name }}</section-head>
-            <p class="promoDesc">{{ promotion.promotionDesc }}</p>
-            <Cover :url="promotion.cover" />
+            <Cover :url="promotion.cover" :overlay="true">{{ promotion.name }}</Cover>
         </a>
     </div>
 
@@ -41,7 +41,7 @@ export default {
 <style lang="scss" scoped>
 .promotionWrapper {
     padding-bottom: 25px;;
-}   
+}
 
 .promoDesc {
     padding: 25px;

@@ -58,8 +58,7 @@ export default {
 <style>
 .horizontal-menu {
     list-style-type: none;
-    margin: 7px 0;
-    padding: 20px 25px;
+    padding: 8px 25px;
     overflow-x: scroll;
     white-space: nowrap;
     display: block;
@@ -78,7 +77,6 @@ export default {
     font-weight: bold;
     display: inline-block;
     padding: 10px;
-    margin-bottom: 15px;
     border-bottom: 1px solid transparent;
     border-top: 1px solid transparent;
     cursor: pointer;
@@ -87,5 +85,9 @@ export default {
 .collection-image {
     width: 200px;
     height: auto;
+}
+
+.collection-info {
+    font-weight: 400;
 }
 </style>

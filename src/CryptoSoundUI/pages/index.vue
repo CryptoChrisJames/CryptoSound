@@ -5,7 +5,7 @@
                 <img src="~/static/images/CSLogo.png" alt="CryptoSound Logo 2" class="CSLogo2">
             </div>
         </Hero>
-        <p class="copy">Check out the latest collections!</p>
+        <section-head>Collections</section-head>
         <CollectionCarousel :collections="collections"></CollectionCarousel>
         <Promotion
             :promotion="generalPromotion"
@@ -19,6 +19,7 @@ import Vue from 'vue';
 import Hero from '../components/organisms/Hero/Hero.vue';
 import Promotion from '../components/organisms/Promotion/Promotion.vue';
 import CollectionCarousel from '../components/organisms/CollectionCarousel/CollectionCarousel.vue';
+import SectionHead from '../components/atoms/Header/SectionHead.vue';
 
 export default Vue.extend({
     async asyncData({store}) {
@@ -34,7 +35,8 @@ export default Vue.extend({
     components: {
         Hero,
         Promotion,
-        CollectionCarousel
+        CollectionCarousel,
+        SectionHead,
     },
     computed: {
         generalPromotion() {
@@ -46,7 +48,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .logoWrapper{
-    height: 100%; 
+    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;

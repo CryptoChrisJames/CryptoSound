@@ -18,6 +18,7 @@ export default {
     line-height: 1.75;
     font-weight: 500;
     margin: 0;
+    font-family: 'Anurati-Outline';
 
     @include phone {
   }

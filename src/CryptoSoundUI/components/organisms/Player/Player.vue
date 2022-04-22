@@ -17,10 +17,11 @@
                                 :src="currentCollection.cover"
                                 class="trackCover"
                             />
+                            <div class="trackCoverOverlay"></div>
                         </div>
                         <div class="trackInfoWrapper">
-                            <div class="trackTitle">{{ t.name }} | {{ currentCollection.creator }}</div>
-                            <div class="trackPrice">{{ t.price }}.00</div>
+                            <div class="trackTitle">{{ t.name }}</div>
+                            <div class="trackPrice">{{ t.price }}.00 | {{ currentCollection.creator }}</div>
                         </div>
                         <div class="trackStatusWrapper">
                             <i v-if="currentTrackSelected == t.id && isPlaying" class="fa-solid fa-pause"></i>
@@ -123,6 +124,6 @@ export default {
 
 .trackPrice {
     padding-top: 8px;
-    font-family: 'Anurati';
+    font-family: 'Anurati-Outline';
 }
 </style>

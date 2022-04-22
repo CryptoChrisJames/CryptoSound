@@ -1,8 +1,7 @@
 <template>
     <div class="collectionPageWrapper">
         <Buffer />
-        <Cover :url="currentCollection.cover" />
-        <section-head>{{ currentCollection.name }}</section-head>
+        <Cover :url="currentCollection.cover" :overlay="true">{{ currentCollection.name }}</Cover>
         <Player :currentCollection="currentCollection" />
         <p class="collectionDesc">{{ currentCollection.description }}</p>
     </div>

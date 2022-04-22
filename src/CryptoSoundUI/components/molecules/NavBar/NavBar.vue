@@ -131,6 +131,7 @@ export default {
   width: auto;
   height: auto;
   display: inline-block;
+  padding-right: 16px;
 }
 
 .cart-icon-wrapper {
