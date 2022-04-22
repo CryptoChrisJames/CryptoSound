@@ -6,26 +6,31 @@
                     class="track"
                     v-for="t in currentCollection.tracks"
                     :key="t.id"
-                    @click="currentTrackSelected == t.id && isPlaying ? pauseTrack()
-                        : currentTrackSelected == t.id && !isPlaying ? playTrack()
-                        : updatePlaylist(t.id)"
                     :class="[ currentTrackSelected == t.id ? 'trackIsSelected' : '']"
                 >
                     <div class="trackWrapper">
-                        <div class="trackArtworkWrapper">
+                        <div class="trackArtworkWrapper" 
+                            @click="currentTrackSelected == t.id && isPlaying ? pauseTrack()
+                                : currentTrackSelected == t.id && !isPlaying ? playTrack()
+                                : updatePlaylist(t.id)">
                             <img
                                 :src="currentCollection.cover"
                                 class="trackCover"
                             />
-                            <div class="trackCoverOverlay"></div>
+                            <div class="trackCoverOverlay">
+                                <i v-if="currentTrackSelected == t.id && isPlaying" class="fa-solid fa-pause"></i>
+                                <i v-else class="fa-solid fa-play"></i>
+                            </div>
                         </div>
-                        <div class="trackInfoWrapper">
+                        <div class="trackInfoWrapper" 
+                            @click="currentTrackSelected == t.id && isPlaying ? pauseTrack()
+                                : currentTrackSelected == t.id && !isPlaying ? playTrack()
+                                : updatePlaylist(t.id)">
                             <div class="trackTitle">{{ t.name }}</div>
-                            <div class="trackPrice">{{ t.price }}.00 | {{ currentCollection.creator }}</div>
+                            <div class="trackPrice"><i class="fa-solid fa-dollar-sign"></i>{{ t.price }}.00 | {{ currentCollection.creator }}</div>
                         </div>
                         <div class="trackStatusWrapper">
-                            <i v-if="currentTrackSelected == t.id && isPlaying" class="fa-solid fa-pause"></i>
-                            <i v-else class="fa-solid fa-play"></i>
+                            <add-to-cart-button :productId="t.productId" />
                         </div>
                     </div>
                 </li>
@@ -35,8 +40,13 @@
 </template>
 
 <script>
+import AddToCartButton from '../../atoms/CartButtons/AddToCartButton.vue';
+
 export default {
     name: "player",
+    components: {
+        AddToCartButton,
+    },
     computed: {
         isPlaying() {
             return this.$store.state.music.isPlaying;
@@ -74,8 +84,8 @@ export default {
 <style lang="scss" scoped>
 @import '../../../styles/_mixins.scss';
 
-.player {
-    padding: 0 20px;
+.playerWrapper {
+    margin: 24px 0;
 }
 
 .track {
@@ -89,7 +99,7 @@ export default {
     flex-direction: row;
     align-items: center;
     width: 100%;
-    border-bottom: 1px solid #5b5968
+    padding: 0 20px;
 }
 
 .trackInfoWrapper {
@@ -103,7 +113,12 @@ export default {
     font-weight: bold;
 }
 
+.trackArtworkWrapper {
+    position: relative;
+}
+
 .trackCover {
+    display: block;
     height: 55px;
     width: 55px;
     border-radius: 5px;
@@ -125,5 +140,22 @@ export default {
 .trackPrice {
     padding-top: 8px;
     font-family: 'Anurati-Outline';
+}
+
+.trackCoverOverlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    color: rgba(20, 20, 20, 0.747);
+    font-size: 24px;
+    text-align: center;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+
+    i.fa-solid {
+        margin: 0 auto;
+    }
 }
 </style>
