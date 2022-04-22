@@ -19,8 +19,8 @@
                             />
                         </div>
                         <div class="trackInfoWrapper">
-                            <div class="trackTitle">{{ t.name }}</div>
-                            <div class="trackCreator">{{ currentCollection.creator }}</div>
+                            <div class="trackTitle">{{ t.name }} | {{ currentCollection.creator }}</div>
+                            <div class="trackPrice">{{ t.price }}.00</div>
                         </div>
                         <div class="trackStatusWrapper">
                             <i v-if="currentTrackSelected == t.id && isPlaying" class="fa-solid fa-pause"></i>
@@ -98,7 +98,7 @@ export default {
     flex: 1 1;
     margin-left: 12px;
     overflow: hidden;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: bold;
 }
 
@@ -119,5 +119,10 @@ export default {
 
 .trackIsSelected {
     background-color: rgba(114, 114, 128, 0.329);
+}
+
+.trackPrice {
+    padding-top: 8px;
+    font-family: 'Anurati';
 }
 </style>
