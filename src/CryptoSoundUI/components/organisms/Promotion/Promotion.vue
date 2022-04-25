@@ -1,6 +1,6 @@
 <template>
     <div class="promotionWrapper">
-        <section-head>Current PRomotion</section-head>
+        <section-head>Current Promotion</section-head>
         <p class="promoDesc">{{ promotion.promotionDesc }}</p>
         <a href="#" @click.prevent="goToPage()">
             <Cover :url="promotion.cover" :overlay="true">{{ promotion.name }}</Cover>

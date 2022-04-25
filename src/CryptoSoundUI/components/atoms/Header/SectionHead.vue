@@ -15,12 +15,12 @@ export default {
     width: 100%;
     text-align: center;
     padding: 22px;
-    line-height: 1.75;
-    font-weight: 500;
+    font-size: 48px;
+    font-weight: 450;
     margin: 0;
-    font-family: 'Anurati-Outline';
+    font-family: 'Roboto-Thin';
 
     @include phone {
-  }
+    }
 }
 </style>
