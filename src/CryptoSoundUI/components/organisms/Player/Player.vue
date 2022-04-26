@@ -22,7 +22,7 @@
                                 <i v-else class="fa-solid fa-play"></i>
                             </div>
                         </div>
-                        <div class="trackInfoWrapper" 
+                        <div class="trackInfoWrapper"
                             @click="currentTrackSelected == t.id && isPlaying ? pauseTrack()
                                 : currentTrackSelected == t.id && !isPlaying ? playTrack()
                                 : updatePlaylist(t.id)">
@@ -30,7 +30,7 @@
                             <div class="trackPrice"><i class="fa-solid fa-dollar-sign"></i>{{ t.price }}.00 | {{ currentCollection.creator }}</div>
                         </div>
                         <div class="trackStatusWrapper">
-                            <add-to-cart-button :productId="t.productId" />
+                            <add-to-cart-button :productId="t.productId" :productType="'track'" />
                         </div>
                     </div>
                 </li>
@@ -139,7 +139,7 @@ export default {
 
 .trackPrice {
     padding-top: 8px;
-    font-family: 'Anurati-Outline';
+    font-family: 'Anurati';
 }
 
 .trackCoverOverlay {

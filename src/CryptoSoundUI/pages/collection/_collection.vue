@@ -6,7 +6,7 @@
         <h3 class="copy">Buy the whole collection</h3>
         <div class="cart-option-wrapper">
             <p class="price"><i class="fa-solid fa-dollar-sign"></i>{{ currentCollection.price }}</p>
-            <add-to-cart-button :productId="currentCollection.productId"/>
+            <add-to-cart-button :productId="currentCollection.productId" :productType="'collection'"/>
         </div>
         <p class="collectionDesc">{{ currentCollection.description }}</p>
     </div>
