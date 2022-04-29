@@ -41,15 +41,21 @@ resource "aws_codebuild_project" "cs-pipeline-builder" {
         type            = "GITHUB"
         location        = "https://github.com/StoryCollectorIO/CryptoSound.git"
         git_clone_depth = 1
-
+        buildspec = "./buildspec/build-pipeline.yaml"
         git_submodules_config {
             fetch_submodules = true
         }
     }
 
-    source_version = "master"
+    source_version = "main"
 
     tags = {
         Environment = "qa"
     }
+}
+
+resource "aws_codebuild_source_credential" "cs-github-credentials" {
+    auth_type   = "PERSONAL_ACCESS_TOKEN"
+    server_type = "GITHUB"
+    token       = var.github_token
 }

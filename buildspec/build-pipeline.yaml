@@ -1,0 +1,30 @@
+version: 0.2
+
+phases:
+  # install:
+  #   commands:
+  #     - command
+  # pre_build:
+  #   commands:
+  #     - command
+  # build:
+  #   run-as: Linux-user-name
+  #   on-failure: ABORT | CONTINUE
+  #   commands:
+  #     - command
+  #     - command
+  #   finally:
+  #     - command
+  #     - command
+  # post_build:
+  #   run-as: Linux-user-name
+  #   on-failure: ABORT | CONTINUE
+  #   commands:
+  #     - command
+  #     - command
+  #   finally:
+  #     - command
+  #     - command
+  build:
+    - echo "This is where you at now!"
+    - ls -la 
