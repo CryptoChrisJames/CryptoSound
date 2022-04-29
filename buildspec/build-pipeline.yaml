@@ -26,5 +26,6 @@ phases:
   #     - command
   #     - command
   build:
-    - echo "This is where you at now!"
-    - ls -la 
+    commands:
+      - echo "This is where you at now!"
+      - ls -la
