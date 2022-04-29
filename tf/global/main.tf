@@ -4,7 +4,7 @@ terraform {
         key = "cs-terraform-statefile.tfstate"
         region = "us-east-1"
     }
-    
+
     required_providers {
         aws = {
             source  = "hashicorp/aws"
@@ -20,8 +20,8 @@ provider "aws" {
     region  = "us-east-1"
 }
 
-resource "aws_codebuild_project" "cs-terraform-global" {
-    name          = "cs-terraform-global"
+resource "aws_codebuild_project" "cs-pipeline-builder" {
+    name          = "cs-pipeline-builder"
     description   = "CodeBuild project for building up the rest of the CICD pipeline"
     build_timeout = "5"
     service_role  = "arn:aws:iam::482352589093:role/service-role/codebuild-terraform-global-service-role"

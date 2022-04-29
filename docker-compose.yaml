@@ -2,7 +2,7 @@ version: "3.9"  # optional since v1.27.0
 services:
   cs-ui:
     container_name: cs-ui
-    build: 
+    build:
       context: ./src/CryptoSoundUI
       dockerfile: Dockerfile.local
     ports:
@@ -10,13 +10,13 @@ services:
     volumes:
       - $HOME/.aws/:/home/.aws/:ro
       - ./src/CryptoSoundUI/:/app
-    environment:      
+    environment:
       AWS_REGION: "us-east-1"
     links:
       - cs-api
   cs-api:
     container_name: cs-api
-    build: 
+    build:
       context: ./src/CryptoSoundAPI
       dockerfile: Dockerfile.local
     ports:
@@ -24,5 +24,5 @@ services:
     volumes:
       - $HOME/.aws/:/home/.aws/:ro
       - ./src/CryptoSoundAPI/:/app
-    environment:      
+    environment:
       AWS_REGION: "us-east-1"
