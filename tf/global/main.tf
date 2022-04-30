@@ -52,10 +52,6 @@ resource "aws_codebuild_project" "cs-pipeline-builder" {
     }
 
     source_version = "main"
-
-    tags = {
-        Environment = "qa"
-    }
 }
 
 resource "aws_codebuild_source_credential" "cs-github-credentials" {
