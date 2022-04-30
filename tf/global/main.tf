@@ -39,14 +39,6 @@ resource "aws_codebuild_project" "cs-pipeline-builder" {
             name  = "TF_VAR_github_token"
             value = var.github_token
         }
-        environment_variable {
-            name  = "TF_VAR_aws_id"
-            value = var.aws_id
-        }
-        environment_variable {
-            name  = "TF_VAR_aws_secret"
-            value = var.aws_secret
-        }
     }
 
     source {
