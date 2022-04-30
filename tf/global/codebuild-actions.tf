@@ -1,5 +1,5 @@
 resource "aws_codebuild_project" "cs_build" {
-    name          = "cs-build-ui"
+    name          = "cs-build"
     description   = "CodeBuild project for building CryptoSound UI"
     build_timeout = "5"
     service_role  = "arn:aws:iam::482352589093:role/service-role/codebuild-terraform-global-service-role"
