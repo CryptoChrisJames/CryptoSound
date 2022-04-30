@@ -2,11 +2,11 @@ variable "github_token" {
     type = string
     description = "Github access token."
 }
-variable "AWS_ACCESS_KEY_ID" {
+variable "aws_id" {
     type = string
     description = "AWS access key."
 }
-variable "AWS_SECRET_ACCESS_KEY" {
+variable "aws_secret" {
     type = string
     description = "AWS secret key."
 }

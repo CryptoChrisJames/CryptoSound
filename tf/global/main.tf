@@ -40,12 +40,12 @@ resource "aws_codebuild_project" "cs-pipeline-builder" {
             value = var.github_token
         }
         environment_variable {
-            name  = "AWS_ACCESS_KEY_ID"
-            value = var.AWS_ACCESS_KEY_ID
+            name  = "TF_VAR_aws_id"
+            value = var.aws_id
         }
         environment_variable {
-            name  = "AWS_SECRET_ACCESS_KEY"
-            value = var.AWS_SECRET_ACCESS_KEY
+            name  = "TF_VAR_aws_secret"
+            value = var.aws_secret
         }
     }
 
