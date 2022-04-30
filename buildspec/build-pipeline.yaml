@@ -1,31 +1,13 @@
 version: 0.2
 
 phases:
-  # install:
-  #   commands:
-  #     - command
-  # pre_build:
-  #   commands:
-  #     - command
-  # build:
-  #   run-as: Linux-user-name
-  #   on-failure: ABORT | CONTINUE
-  #   commands:
-  #     - command
-  #     - command
-  #   finally:
-  #     - command
-  #     - command
-  # post_build:
-  #   run-as: Linux-user-name
-  #   on-failure: ABORT | CONTINUE
-  #   commands:
-  #     - command
-  #     - command
-  #   finally:
-  #     - command
-  #     - command
+  install:
+    commands:
+      - curl -s -qL -o terraform_install.zip https://releases.hashicorp.com/terraform/0.11.13/terraform_0.11.13_linux_amd64.zip
+      - unzip terraform_install.zip -d /usr/bin/
+      - chmod +x /usr/bin/terraform
+      
   build:
     commands:
-      - echo "This is where you at now!"
-      - ls -la
+      - cd ./tf/global
+      - terraform apply 
