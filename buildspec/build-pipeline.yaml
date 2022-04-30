@@ -10,4 +10,5 @@ phases:
   build:
     commands:
       - cd ./tf/global
+      - terraform init 
       - TF_VAR_github_token=$TF_VAR_github_token terraform apply 
