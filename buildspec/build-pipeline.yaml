@@ -1,5 +1,8 @@
 version: 0.2
 
+env:
+  secrets-manager:
+    TF_VAR_github_token:arn:aws:secretsmanager:us-east-1:482352589093:secret:scp-github-access-token-wl0bYW:TF_VAR_github_token
 phases:
   install:
     commands:
@@ -9,6 +12,7 @@ phases:
 
   build:
     commands:
+      - echo $TF_VAR_github_token
       - cd ./tf/global
       - terraform init
       - terraform apply -auto-approve
