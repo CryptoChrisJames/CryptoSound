@@ -12,7 +12,6 @@ phases:
 
   build:
     commands:
-      - echo $TF_VAR_github_token
       - cd ./tf/global
       - terraform init
       - terraform apply -auto-approve
