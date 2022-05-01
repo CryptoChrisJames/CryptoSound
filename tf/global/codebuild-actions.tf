@@ -14,10 +14,6 @@ resource "aws_codebuild_project" "cs_build" {
         type                        = "LINUX_CONTAINER"
         image_pull_credentials_type = "CODEBUILD"
 
-        environment_variable {
-            name  = "TF_VAR_github_token"
-            value = var.github_token
-        }
     }
 
     source {

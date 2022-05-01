@@ -35,10 +35,6 @@ resource "aws_codebuild_project" "cs-pipeline-builder" {
         image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
         type                        = "LINUX_CONTAINER"
         image_pull_credentials_type = "CODEBUILD"
-        environment_variable {
-            name  = "TF_VAR_github_token"
-            value = var.github_token
-        }
     }
 
     source {
