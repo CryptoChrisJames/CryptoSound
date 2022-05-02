@@ -11,3 +11,4 @@ phases:
       - docker --version
       - cd ./src/CryptoSoundUI
       - docker build . -t scp-cs-ui:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker push $GCP_REPO/scp-cs-ui:$CODEBUILD_RESOLVED_SOURCE_VERSION

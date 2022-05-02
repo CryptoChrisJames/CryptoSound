@@ -13,9 +13,9 @@ phases:
       - curl -s -qL -o terraform_install.zip https://releases.hashicorp.com/terraform/1.1.9/terraform_1.1.9_linux_amd64.zip
       - unzip terraform_install.zip -d /usr/bin/
       - chmod +x /usr/bin/terraform
-
   build:
     commands:
+
       - cd ./tf/global
       - terraform init
       - terraform apply -auto-approve
