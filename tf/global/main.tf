@@ -26,7 +26,6 @@ provider "aws" {
 }
 
 provider "google" {
-    credentials = var.gcp_creds
     project = var.gcp_project
     region  = var.gcp_region
     zone    = var.gcp_zone
