@@ -19,3 +19,7 @@ variable "gcp_zone" {
     type = string
     description = "GCP provider zone."
 }
+variable "gcp_creds" {
+    type = string
+    description = "GCP provider credentials."
+}
