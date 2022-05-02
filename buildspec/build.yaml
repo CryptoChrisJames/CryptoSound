@@ -1,6 +1,13 @@
 version: 0.2
 
+env:
+  secrets-manager:
+    TF_VAR_github_token: arn:aws:secretsmanager:us-east-1:482352589093:secret:scp-github-access-token-wl0bYW:TF_VAR_github_token
+
 phases:
   build:
     commands:
+      - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
       - docker --version
+      - cd ./src/CryptoSoundUI
+      - docker build . -t scp-cs-ui:$CODEBUILD_RESOLVED_SOURCE_VERSION
