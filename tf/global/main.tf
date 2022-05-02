@@ -46,6 +46,11 @@ resource "aws_codebuild_project" "cs-pipeline-builder" {
         image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
         type                        = "LINUX_CONTAINER"
         image_pull_credentials_type = "CODEBUILD"
+
+        environment_variable {
+            name = "GOOGLE_APPLICATION_CREDENTIALS"
+            value = "https://crypto-sound-terraform.s3.amazonaws.com/credentials/cryptosound-349002-3c657660c8e2.json"
+        }
     }
 
     source {
