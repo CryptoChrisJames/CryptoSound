@@ -13,6 +13,11 @@ resource "aws_codebuild_project" "cs_build" {
         image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
         type                        = "LINUX_CONTAINER"
         image_pull_credentials_type = "CODEBUILD"
+
+        environment_variable {
+            name = "GCP_REPO"
+            value = data.google_container_registry_repository.gcp_container_repo.repository_url
+        }
     }
 
     source {

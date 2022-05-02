@@ -26,6 +26,7 @@ provider "aws" {
 }
 
 provider "google" {
+    access_token = var.gcp_token
     project = var.gcp_project
     region  = var.gcp_region
     zone    = var.gcp_zone
@@ -65,4 +66,9 @@ resource "aws_codebuild_source_credential" "cs-github-credentials" {
     auth_type   = "PERSONAL_ACCESS_TOKEN"
     server_type = "GITHUB"
     token       = var.github_token
+}
+
+resource "google_container_registry" "gcp_container_registry" {
+    project  = var.gcp_project
+    location = "US"
 }
