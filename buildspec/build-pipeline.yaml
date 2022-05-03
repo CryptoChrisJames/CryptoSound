@@ -16,7 +16,7 @@ phases:
 
   pre_build:
     commands:
-      - curl -o gcp_creds.json https://crypto-sound-terraform.s3.amazonaws.com/credentials/cryptosound-349002-3c657660c8e2.json
+      - aws s3 cp s3://crypto-sound-terraform/credentials/gcp_creds.json .
       - export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcp_creds.json
       - echo $GOOGLE_APPLICATION_CREDENTIALS
 
