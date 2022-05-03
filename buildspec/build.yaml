@@ -10,12 +10,12 @@ phases:
       - curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-383.0.1-linux-x86_64.tar.gz
       - tar -xf google-cloud-cli-383.0.1-linux-x86_64.tar.gz
       - yes Y | ./google-cloud-sdk/install.sh
-      - aws s3 cp s3://crypto-sound-terraform/credentials/gcp_creds.json .
-      - gcloud auth 863979559433-compute@developer.gserviceaccount.com ACCOUNT --key-file=./gcp_creds.json
-      - ./google-cloud-sdk/bin/gcloud init
+      - yes n | ./google-cloud-sdk/bin/gcloud init
 
   pre_build:
     commands:
+      - aws s3 cp s3://crypto-sound-terraform/credentials/gcp_creds.json .
+      - gcloud auth 863979559433-compute@developer.gserviceaccount.com ACCOUNT --key-file=./gcp_creds.json
       - export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcp_creds.json
 
   build:
