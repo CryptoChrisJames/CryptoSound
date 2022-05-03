@@ -13,9 +13,15 @@ phases:
       - curl -s -qL -o terraform_install.zip https://releases.hashicorp.com/terraform/1.1.9/terraform_1.1.9_linux_amd64.zip
       - unzip terraform_install.zip -d /usr/bin/
       - chmod +x /usr/bin/terraform
+
+  pre_build:
+    commands:
+      - curl -o gcp_creds.json https://crypto-sound-terraform.s3.amazonaws.com/credentials/cryptosound-349002-3c657660c8e2.json
+      - export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcp_creds.jsom
+      - echo $GOOGLE_APPLICATION_CREDENTIALS
+
   build:
     commands:
-
       - cd ./tf/global
       - terraform init
       - terraform apply -auto-approve
