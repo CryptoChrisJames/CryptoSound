@@ -17,6 +17,11 @@ resource "aws_codebuild_project" "cs_build" {
         privileged_mode = true
 
         environment_variable {
+            name = "STAGE"
+            value = "qa"
+        }
+
+        environment_variable {
             name = "GCP_REPO"
             value = data.google_container_registry_repository.gcp_container_repo.repository_url
         }
@@ -35,3 +40,5 @@ resource "aws_codebuild_project" "cs_build" {
 
     source_version = "main"
 }
+
+#TODO: ECR repository

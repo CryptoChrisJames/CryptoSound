@@ -10,11 +10,6 @@ terraform {
             source  = "hashicorp/aws"
             version = "~> 3.27"
         }
-
-        google = {
-            source = "hashicorp/google"
-            version = "4.19.0"
-        }
     }
 
     required_version = ">= 0.14.9"
@@ -23,12 +18,6 @@ terraform {
 provider "aws" {
     profile = "default"
     region  = "us-east-1"
-}
-
-provider "google" {
-    project = var.gcp_project
-    region  = var.gcp_region
-    zone    = var.gcp_zone
 }
 
 resource "aws_codebuild_project" "cs-pipeline-builder" {
@@ -65,9 +54,4 @@ resource "aws_codebuild_source_credential" "cs-github-credentials" {
     auth_type   = "PERSONAL_ACCESS_TOKEN"
     server_type = "GITHUB"
     token       = var.github_token
-}
-
-resource "google_container_registry" "gcp_container_registry" {
-    project  = var.gcp_project
-    location = "US"
 }
