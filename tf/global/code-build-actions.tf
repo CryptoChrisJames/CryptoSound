@@ -1,5 +1,5 @@
-resource "aws_codebuild_project" "cs_build" {
-    name          = "cs-build"
+resource "aws_codebuild_project" "cs_build_ui" {
+    name          = "cs-build-ui"
     description   = "CodeBuild project for building CryptoSound UI"
     build_timeout = "5"
     service_role  = "arn:aws:iam::482352589093:role/service-role/codebuild-terraform-global-service-role"
@@ -15,11 +15,6 @@ resource "aws_codebuild_project" "cs_build" {
         image_pull_credentials_type = "CODEBUILD"
 
         privileged_mode = true
-
-        environment_variable {
-            name = "STAGE"
-            value = "qa"
-        }
 
         environment_variable {
             name = "GCP_REPO"
@@ -40,5 +35,3 @@ resource "aws_codebuild_project" "cs_build" {
 
     source_version = "main"
 }
-
-#TODO: ECR repository
