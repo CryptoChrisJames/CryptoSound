@@ -8,11 +8,6 @@ variable "aws_cicd_role_arn" {
     description = "The arn connected to the aws role for teh ci-cd pipeline."
     default = "arn:aws:iam::482352589093:role/service-role/codebuild-terraform-global-service-role"
 }
-variable "github_oauth_token" {
-    type        = string
-    description = "GitHub OAuth Token with permissions to access private repositories"
-    default     = ""
-}
 variable "repo_owner" {
     type        = string
     description = "Github CryptoSound repo owner"

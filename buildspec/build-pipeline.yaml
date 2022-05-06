@@ -3,10 +3,10 @@ version: 0.2
 env:
   secrets-manager:
     TF_VAR_github_token: arn:aws:secretsmanager:us-east-1:482352589093:secret:scp-github-access-token-wl0bYW:TF_VAR_github_token
-    TF_VAR_repo_owner: arn:aws:secretsmanager:us-east-1:482352589093:secret:scp-github-access-token-wl0bYW:repo-owner
-    TF_VAR_repo: arn:aws:secretsmanager:us-east-1:482352589093:secret:gcp-provider-config-22z8EI:repo
-    TF_VAR_branch: arn:aws:secretsmanager:us-east-1:482352589093:secret:gcp-provider-config-22z8EI:branch
-    TF_VAR_poll_for_changes: arn:aws:secretsmanager:us-east-1:482352589093:secret:gcp-provider-config-22z8EI:pull-for-changes
+    TF_VAR_repo_owner: arn:aws:secretsmanager:us-east-1:482352589093:secret:terraform-global-variables-tw1F9n:TF_VAR_repo_owner
+    TF_VAR_repo: arn:aws:secretsmanager:us-east-1:482352589093:secret:terraform-global-variables-tw1F9n:TF_VAR_repo
+    TF_VAR_branch: arn:aws:secretsmanager:us-east-1:482352589093:secret:terraform-global-variables-tw1F9n:TF_VAR_branch
+    TF_VAR_poll_for_changes: arn:aws:secretsmanager:us-east-1:482352589093:secret:terraform-global-variables-tw1F9n:TF_VAR_poll_for_changes
 
 phases:
   install:
