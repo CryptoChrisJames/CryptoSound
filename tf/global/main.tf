@@ -24,7 +24,7 @@ resource "aws_codebuild_project" "cs-pipeline-builder" {
     name          = "cs-pipeline-builder"
     description   = "CodeBuild project for building up the rest of the CICD pipeline"
     build_timeout = "5"
-    service_role  = "arn:aws:iam::482352589093:role/service-role/codebuild-terraform-global-service-role"
+    service_role  = var.aws_cicd_role_arn
 
     artifacts {
         type = "NO_ARTIFACTS"
@@ -54,4 +54,18 @@ resource "aws_codebuild_source_credential" "cs-github-credentials" {
     auth_type   = "PERSONAL_ACCESS_TOKEN"
     server_type = "GITHUB"
     token       = var.github_token
+}
+
+resource "aws_s3_bucket" "codepipeline_bucket" {
+    bucket = "cs-pipeline-bucket"
+}
+
+resource "aws_s3_bucket_acl" "codepipeline_bucket_acl" {
+    bucket = aws_s3_bucket.codepipeline_bucket.id
+    acl    = "private"
+}
+
+resource "aws_codestarconnections_connection" "codepipeline_connection" {
+    name          = "codepipeline-connection"
+    provider_type = "GitHub"
 }

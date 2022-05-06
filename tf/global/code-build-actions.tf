@@ -15,11 +15,6 @@ resource "aws_codebuild_project" "cs_build_ui" {
         image_pull_credentials_type = "CODEBUILD"
 
         privileged_mode = true
-
-        environment_variable {
-            name = "GCP_REPO"
-            value = data.google_container_registry_repository.gcp_container_repo.repository_url
-        }
     }
 
     source {
