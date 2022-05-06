@@ -2,15 +2,30 @@ variable "github_token" {
     type = string
     description = "Github access token."
 }
-variable "gcp_project" {
+
+variable "aws_cicd_role_arn" {
     type = string
-    description = "GCP provider project."
+    description = "The arn connected to the aws role for teh ci-cd pipeline."
+    default = "arn:aws:iam::482352589093:role/service-role/codebuild-terraform-global-service-role"
 }
-variable "gcp_region" {
-    type = string
-    description = "GCP provider region."
+variable "github_oauth_token" {
+    type        = string
+    description = "GitHub OAuth Token with permissions to access private repositories"
+    default     = ""
 }
-variable "gcp_zone" {
-    type = string
-    description = "GCP provider zone."
+variable "repo_owner" {
+    type        = string
+    description = "Github CryptoSound repo owner"
+}
+variable "repo" {
+    type        = string
+    description = "Github CryptoSound repo."
+}
+variable "branch" {
+    type        = string
+    description = "Github CryptoSound repo branch"
+}
+variable "poll_for_changes" {
+    type        = string
+    description = "CodePipeline variable for polling for changes."
 }

@@ -10,11 +10,6 @@ terraform {
             source  = "hashicorp/aws"
             version = "~> 3.27"
         }
-
-        google = {
-            source = "hashicorp/google"
-            version = "4.19.0"
-        }
     }
 
     required_version = ">= 0.14.9"
@@ -25,17 +20,11 @@ provider "aws" {
     region  = "us-east-1"
 }
 
-provider "google" {
-    project = var.gcp_project
-    region  = var.gcp_region
-    zone    = var.gcp_zone
-}
-
 resource "aws_codebuild_project" "cs-pipeline-builder" {
     name          = "cs-pipeline-builder"
     description   = "CodeBuild project for building up the rest of the CICD pipeline"
     build_timeout = "5"
-    service_role  = "arn:aws:iam::482352589093:role/service-role/codebuild-terraform-global-service-role"
+    service_role  = var.aws_cicd_role_arn
 
     artifacts {
         type = "NO_ARTIFACTS"
@@ -67,7 +56,16 @@ resource "aws_codebuild_source_credential" "cs-github-credentials" {
     token       = var.github_token
 }
 
-resource "google_container_registry" "gcp_container_registry" {
-    project  = var.gcp_project
-    location = "US"
+resource "aws_s3_bucket" "codepipeline_bucket" {
+    bucket = "cs-pipeline-bucket"
+}
+
+resource "aws_s3_bucket_acl" "codepipeline_bucket_acl" {
+    bucket = aws_s3_bucket.codepipeline_bucket.id
+    acl    = "private"
+}
+
+resource "aws_codestarconnections_connection" "codepipeline_connection" {
+    name          = "codepipeline-connection"
+    provider_type = "GitHub"
 }
