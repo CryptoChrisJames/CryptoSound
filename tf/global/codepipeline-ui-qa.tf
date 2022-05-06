@@ -90,7 +90,7 @@ resource "aws_iam_role" "codepipeline_role" {
         "Action": [
             "codestar-connections:UseConnection"
         ],
-        "Resource": "${aws_codestarconnections_connection.example.arn}"
+        "Resource": "${aws_codestarconnections_connection.codepipeline_connection.arn}"
         },
         {
         "Effect": "Allow",
