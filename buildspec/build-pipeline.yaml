@@ -15,11 +15,6 @@ phases:
       - unzip terraform_install.zip -d /usr/bin/
       - chmod +x /usr/bin/terraform
 
-  pre_build:
-    commands:
-      - aws s3 cp s3://crypto-sound-terraform/credentials/gcp_creds.json .
-      - export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcp_creds.json
-
   build:
     commands:
       - cd ./tf/global
