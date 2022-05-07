@@ -13,15 +13,16 @@ resource "aws_codepipeline" "cs_pipeline_qa" {
         action {
             name             = "Source"
             category         = "Source"
-            owner            = "AWS"
-            provider         = "CodeStarSourceConnection"
+            owner            = "ThirdParty"
+            provider         = "GitHub"
             version          = "1"
-            output_artifacts = ["source_output"]
-
+            output_artifacts = ["code"]
             configuration = {
-                ConnectionArn    = aws_codestarconnections_connection.codepipeline_connection.arn
-                FullRepositoryId = var.repo
-                BranchName       = var.branch
+                OAuthToken           = var.github_token
+                Owner                = var.repo_owner
+                Repo                 = var.repo
+                Branch               = var.branch
+                PollForSourceChanges = var.poll_for_changes
             }
         }
     }
