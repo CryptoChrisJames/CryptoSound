@@ -38,8 +38,13 @@ resource "aws_codebuild_project" "cs-pipeline-builder" {
     }
 
     source {
-        type      = "CODEPIPELINE"
+        type            = "GITHUB"
+        location        = "https://github.com/StoryCollectorIO/CryptoSound.git"
+        git_clone_depth = 1
         buildspec = "./buildspec/build-pipeline.yaml"
+        git_submodules_config {
+            fetch_submodules = true
+        }
     }
 
     source_version = "main"
