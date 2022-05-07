@@ -34,7 +34,7 @@ resource "aws_codepipeline" "cs_pipeline_qa" {
                 category         = "Build"
                 owner            = "AWS"
                 provider         = "CodeBuild"
-                input_artifacts  = ["source_output"]
+                input_artifacts  = ["code"]
                 output_artifacts = ["build_output"]
                 version          = "1"
 

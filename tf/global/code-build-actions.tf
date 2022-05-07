@@ -5,7 +5,7 @@ resource "aws_codebuild_project" "cs_build_ui" {
     service_role  = "arn:aws:iam::482352589093:role/service-role/codebuild-terraform-global-service-role"
 
     artifacts {
-        type = "NO_ARTIFACTS"
+        type = "CODEPIPELINE"
     }
 
     environment {
