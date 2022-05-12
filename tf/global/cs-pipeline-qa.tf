@@ -39,7 +39,7 @@ resource "aws_codepipeline" "cs_pipeline_qa" {
                 version          = "1"
 
             configuration = {
-                ProjectName = aws_codebuild_project.cs_build_ui.name
+                ProjectName = aws_codebuild_project.cs_build_qa.name
             }
         }
     }
@@ -97,4 +97,52 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
     ]
 }
 EOF
+}
+
+resource "aws_codebuild_project" "cs_build_qa" {
+    name          = "cs-build-qa"
+    description   = "CodeBuild project for building CryptoSound UI"
+    build_timeout = "5"
+    service_role  = "arn:aws:iam::482352589093:role/service-role/codebuild-terraform-global-service-role"
+
+    artifacts {
+        type = "CODEPIPELINE"
+    }
+
+    environment {
+        compute_type                = "BUILD_GENERAL1_SMALL"
+        image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
+        type                        = "LINUX_CONTAINER"
+        image_pull_credentials_type = "CODEBUILD"
+
+        privileged_mode = true
+
+        environment_variable {
+            name = "ENV"
+            type = "PLAINTEXT"
+            value = "qa"
+        }
+
+        environment_variable {
+            name = "ECR_URL"
+            type = "PLAINTEXT"
+            value = aws_ecr_repository.cs_ui_container_repo_qa.repository_url
+        }
+    }
+
+    source {
+        type      = "CODEPIPELINE"
+        buildspec = "./buildspec/build.yaml"
+    }
+
+    source_version = "main"
+}
+
+resource "aws_ecr_repository" "cs_ui_container_repo_qa" {
+    name                 = "cs-ui-container-repo-qa"
+    image_tag_mutability = "MUTABLE"
+
+    image_scanning_configuration {
+        scan_on_push = true
+    }
 }
