@@ -12,7 +12,7 @@ phases:
       - export ECR_URI=${ECR_URL%/*}
       - echo $DOCKER_PUSH_URL
       - cd ./src/CryptoSoundUI
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URI
+      - aws ecr get-login-password --region us-east-1 | docker login --username scp-infrastructure --password-stdin $ECR_URI
       - docker build . -t $DOCKER_IMG_NAME
       - docker tag $DOCKER_IMG_NAME $DOCKER_PUSH_URL
       - docker image push $DOCKER_PUSH_URL
