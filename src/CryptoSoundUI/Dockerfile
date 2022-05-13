@@ -1,4 +1,4 @@
-FROM node:15.14.0-alpine
+FROM public.ecr.aws/docker/library/node:15.14.0-alpine
 
 # create destination directory
 RUN mkdir -p /usr/src/nuxt-app
