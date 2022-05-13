@@ -9,5 +9,5 @@ phases:
     commands:
       - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
       - cd ./src/CryptoSoundUI
-      - docker build . -t scp-cs-ui:$CODEBUILD_RESOLVED_SOURCE_VERSION
-      - docker push $ECR_URL/scp-cs-ui:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker build . -t scp-cs-$ENV:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker image push $ECR_URL/scp-cs-$ENV:$CODEBUILD_RESOLVED_SOURCE_VERSION
