@@ -7,6 +7,7 @@ env:
     TF_VAR_repo: arn:aws:secretsmanager:us-east-1:482352589093:secret:terraform-global-variables-tw1F9n:TF_VAR_repo
     TF_VAR_branch: arn:aws:secretsmanager:us-east-1:482352589093:secret:terraform-global-variables-tw1F9n:TF_VAR_branch
     TF_VAR_poll_for_changes: arn:aws:secretsmanager:us-east-1:482352589093:secret:terraform-global-variables-tw1F9n:TF_VAR_poll_for_changes
+    TF_VAR_docker_key: arn:aws:secretsmanager:us-east-1:482352589093:secret:terraform-global-variables-tw1F9n:TF_VAR_docker_key
 
 phases:
   install:

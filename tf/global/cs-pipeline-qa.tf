@@ -128,6 +128,12 @@ resource "aws_codebuild_project" "cs_build_qa" {
             type = "PLAINTEXT"
             value = aws_ecr_repository.cs_ui_container_repo_qa.repository_url
         }
+
+        environment_variable {
+            name = "DOCKER_KEY"
+            type = "PLAINTEXT"
+            value = var.docker_key
+        }
     }
 
     source {
