@@ -11,4 +11,5 @@ phases:
       - cd ./src/CryptoSoundUI
       - docker login -u storycollector -p $DOCKER_KEY
       - docker build . -t scp-cs-$ENV:$CODEBUILD_RESOLVED_SOURCE_VERSION
-      - docker image push $ECR_URL/scp-cs-$ENV:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - export DOCKER_PUSH_URL=$ECR_URL/scp-cs-$ENV:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker image push $DOCKER_PUSH_URL
