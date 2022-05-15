@@ -7,7 +7,7 @@ env:
 phases:
   build:
     commands:
-      - export DOCKER_PUSH_URL=$ECR_URL:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - export DOCKER_PUSH_URL=$ECR_URL:$COMMITID
       - export ECR_URI=${ECR_URL%/*}
       - cd ./src/CryptoSoundUI
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URI

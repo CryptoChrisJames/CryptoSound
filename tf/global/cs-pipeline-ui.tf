@@ -1,5 +1,5 @@
-resource "aws_codepipeline" "cs_pipeline_qa" {
-    name = "cs-pipeline-qa"
+resource "aws_codepipeline" "cs_pipeline_ui" {
+    name = "cs-pipeline-ui"
     role_arn = aws_iam_role.codepipeline_role.arn
 
     artifact_store {
@@ -35,6 +35,23 @@ resource "aws_codepipeline" "cs_pipeline_qa" {
                 owner            = "AWS"
                 provider         = "CodeBuild"
                 input_artifacts  = ["code"]
+                output_artifacts = ["build_output"]
+                version          = "1"
+
+            configuration = {
+                ProjectName = aws_codebuild_project.cs_build_qa.name
+            }
+        }
+    }
+
+    stage {
+        name = "Deploy-QA"
+            action {
+                name             = "Deploy-QA"
+                category         = "Deploy"
+                owner            = "AWS"
+                provider         = "CodeBuild"
+                input_artifacts  = ["build_output"]
                 output_artifacts = ["build_output"]
                 version          = "1"
 
