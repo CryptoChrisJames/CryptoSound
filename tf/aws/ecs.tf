@@ -1,9 +1,9 @@
 resource "aws_ecs_task_definition" "scp_cs_ui_task" {
-    family                   = "scp-cs-ui-task" # Naming our first task
+    family                   = "scp-cs-ui-task-${var.env}" # Naming our first task
     container_definitions    = <<DEFINITION
     [
         {
-        "name": "scp-cs-ui-task",
+        "name": "scp-cs-ui-task-${var.env}",
         "image": "${var.ecr_ui_repo_url}",
         "essential": true,
         "portMappings": [
@@ -39,11 +39,28 @@ resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
 }
 
 resource "aws_ecs_service" "cs_ui_service" {
-    name            = "cs-ui-service"                             # Naming our first service
+    name            = "cs-ui-service-${var.env}"                             # Naming our first service
     cluster         = local.ecs_cluster             # Referencing our created Cluster
     task_definition = "${aws_ecs_task_definition.scp_cs_ui_task.arn}" # Referencing the task our service will spin up
     launch_type     = "FARGATE"
     desired_count   = 1 # Setting the number of containers we want deployed to 1
+    network_configuration {
+        subnets = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}"]
+        assign_public_ip = true
+    }
+}
+
+# Providing a reference to our default VPC
+resource "aws_default_vpc" "default_vpc" {
+}
+
+# Providing a reference to our default subnets
+resource "aws_default_subnet" "default_subnet_a" {
+    availability_zone = "us-east-1a"
+}
+
+resource "aws_default_subnet" "default_subnet_b" {
+    availability_zone = "us-east-1b"
 }
 
 locals {
