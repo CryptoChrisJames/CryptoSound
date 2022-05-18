@@ -48,7 +48,7 @@ resource "aws_codepipeline" "cs_pipeline_ui" {
         name = "Deploy-QA"
             action {
                 name             = "Deploy-QA"
-                category         = "Deploy"
+                category         = "Build"
                 owner            = "AWS"
                 provider         = "CodeBuild"
                 input_artifacts  = ["code"]
