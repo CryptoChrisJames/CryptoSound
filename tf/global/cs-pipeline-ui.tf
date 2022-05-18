@@ -35,7 +35,7 @@ resource "aws_codepipeline" "cs_pipeline_ui" {
                 owner            = "AWS"
                 provider         = "CodeBuild"
                 input_artifacts  = ["code"]
-                output_artifacts = ["build_output"]
+                output_artifacts = ["build"]
                 version          = "1"
 
             configuration = {
@@ -51,8 +51,8 @@ resource "aws_codepipeline" "cs_pipeline_ui" {
                 category         = "Build"
                 owner            = "AWS"
                 provider         = "CodeBuild"
-                input_artifacts  = ["build_output"]
-                output_artifacts = ["deploy_output"]
+                input_artifacts  = ["build"]
+                output_artifacts = ["deploy"]
                 version          = "1"
 
             configuration = {
