@@ -13,5 +13,6 @@ phases:
 
   build:
     commands:
+      - cd tf/aws
       - terraform init
       - TF_VAR_env=$ENV TF_VAR_ecr_ui_repo_url=$ECR_URL terraform apply
