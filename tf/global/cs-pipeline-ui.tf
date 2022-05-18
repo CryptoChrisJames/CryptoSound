@@ -37,6 +37,7 @@ resource "aws_codepipeline" "cs_pipeline_ui" {
                 input_artifacts  = ["code"]
                 output_artifacts = ["build"]
                 version          = "1"
+                namespace        = "ENVVARS"
 
             configuration = {
                 ProjectName = aws_codebuild_project.cs_build_ui_qa.name
@@ -56,7 +57,10 @@ resource "aws_codepipeline" "cs_pipeline_ui" {
                 version          = "1"
 
             configuration = {
-                ProjectName = aws_codebuild_project.cs_deploy_ui_qa.name
+                ProjectName          = aws_codebuild_project.cs_deploy_ui_qa.name
+                EnvironmentVariables = <<EOF
+[{"name":"GITSHA","type":"PLAINTEXT","value":"#{ENVVARS.CODEBUILD_RESOLVED_SOURCE_VERSION}"}]
+EOF
             }
         }
     }
