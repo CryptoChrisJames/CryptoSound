@@ -15,4 +15,4 @@ phases:
     commands:
       - cd tf/aws
       - terraform init
-      - TF_VAR_env=$ENV TF_VAR_ecr_ui_repo_url=$ECR_URL terraform apply -auto-approve
+      - TF_VAR_env=$ENV TF_VAR_ecr_ui_repo_url=$ECR_URL:$CODEBUILD_RESOLVED_SOURCE_VERSION terraform apply -auto-approve
