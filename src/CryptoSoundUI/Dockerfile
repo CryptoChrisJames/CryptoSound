@@ -18,6 +18,7 @@ RUN npm run build
 
 # expose 5000 on container
 EXPOSE 80
+EXPOSE 443
 
 # set app serving to permissive / assigned
 ENV NUXT_HOST=0.0.0.0

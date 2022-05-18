@@ -1,4 +1,3 @@
-
 resource "aws_ecs_task_definition" "scp_cs_ui_task" {
     family                   = "scp-cs-ui-task" # Naming our first task
     container_definitions    = <<DEFINITION
@@ -9,12 +8,16 @@ resource "aws_ecs_task_definition" "scp_cs_ui_task" {
         "essential": true,
         "portMappings": [
             {
-            "containerPort": 3000,
-            "hostPort": 3000
+                "containerPort": 80,
+                "hostPort": 80
+            },
+            {
+                "containerPort": 443,
+                "hostPort": 443
             }
         ],
-        "memory": 512,
-        "cpu": 256
+            "memory": 512,
+            "cpu": 256
         }
     ]
     DEFINITION
@@ -30,18 +33,19 @@ resource "aws_iam_role" "ecsTaskExecutionRole" {
     assume_role_policy = "${data.aws_iam_policy_document.assume_role_policy.json}"
 }
 
-data "aws_iam_policy_document" "assume_role_policy" {
-    statement {
-        actions = ["sts:AssumeRole"]
-
-        principals {
-        type        = "Service"
-        identifiers = ["ecs-tasks.amazonaws.com"]
-        }
-    }
-}
-
 resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
     role       = "${aws_iam_role.ecsTaskExecutionRole.name}"
     policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
+resource "aws_ecs_service" "cs_ui_service" {
+    name            = "cs-ui-service"                             # Naming our first service
+    cluster         = local.ecs_cluster             # Referencing our created Cluster
+    task_definition = "${aws_ecs_task_definition.scp_cs_ui_task.arn}" # Referencing the task our service will spin up
+    launch_type     = "FARGATE"
+    desired_count   = 1 # Setting the number of containers we want deployed to 1
+}
+
+locals {
+    ecs_cluster = var.env == "prod" ? aws_ecs_cluster.scp_cluster_prod.id : var.env == "stage" ? aws_ecs_cluster.scp_cluster_stage.id : aws_ecs_cluster.scp_cluster_qa.id
 }
