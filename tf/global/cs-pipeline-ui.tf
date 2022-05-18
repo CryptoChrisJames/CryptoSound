@@ -56,7 +56,7 @@ resource "aws_codepipeline" "cs_pipeline_ui" {
                 version          = "1"
 
             configuration = {
-                ProjectName = aws_codebuild_project.cs_build_ui_qa.name
+                ProjectName = aws_codebuild_project.cs_deploy_ui_qa.name
             }
         }
     }
