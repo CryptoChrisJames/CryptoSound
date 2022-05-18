@@ -14,3 +14,7 @@ phases:
       - docker build . -t cs-ui
       - docker tag cs-ui $DOCKER_PUSH_URL
       - docker push $DOCKER_PUSH_URL
+
+artifacts:
+  files:
+    - '**/*'
