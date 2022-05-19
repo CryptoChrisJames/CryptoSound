@@ -12,8 +12,8 @@ phases:
       - cd ./src/CryptoSoundUI
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URI
       - docker build . -t cs-ui
-      - docker tag cs-ui $ECR_URL:latest
-      - docker push $ECR_URL:latest
+      - docker tag cs-ui $ECR_URL
+      - docker push $ECR_URL
 
 artifacts:
   files:
