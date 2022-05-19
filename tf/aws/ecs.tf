@@ -50,7 +50,7 @@ resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
 resource "aws_ecs_service" "cs_ui_service" {
     name            = "cs-ui-service-${var.env}"                             # Naming our first service
     cluster         = local.ecs_cluster             # Referencing our created Cluster
-    task_definition = "${aws_ecs_task_definition.scp_cs_ui_task.arn}" # Referencing the task our service will spin up
+    task_definition = "${aws_ecs_task_definition.cs_ui_task.arn}" # Referencing the task our service will spin up
     launch_type     = "FARGATE"
     desired_count   = 1 # Setting the number of containers we want deployed to 1
     network_configuration {
@@ -64,7 +64,7 @@ resource "aws_cloudwatch_log_group" "log-group" {
 
     tags = {
         Application = var.app_name
-        Environment = var.app_environment
+        Environment = var.env
     }
 }
 
