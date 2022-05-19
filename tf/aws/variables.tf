@@ -8,3 +8,9 @@ variable "ecr_ui_repo_url" {
     description = "The URL that points to the current "
 }
 
+variable "app_name" {
+    type        = string
+    description = "CryptoSound app name."
+    default = "cryptosound"
+}
+

@@ -1,11 +1,19 @@
-resource "aws_ecs_task_definition" "scp_cs_ui_task" {
-    family                   = "scp-cs-ui-task-${var.env}" # Naming our first task
+resource "aws_ecs_task_definition" "cs_ui_task" {
+    family                   = "cs-ui-task-${var.env}" # Naming our first task
     container_definitions    = <<DEFINITION
     [
         {
-        "name": "scp-cs-ui-task-${var.env}",
+        "name": "cs-ui-task-${var.env}",
         "image": "${var.ecr_ui_repo_url}",
         "essential": true,
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+            "awslogs-group": "${aws_cloudwatch_log_group.log-group.id}",
+            "awslogs-region": "us-east-1",
+            "awslogs-stream-prefix": "${var.app_name}-${var.env}"
+            }
+        },
         "portMappings": [
             {
                 "containerPort": 80,
@@ -26,6 +34,7 @@ resource "aws_ecs_task_definition" "scp_cs_ui_task" {
     memory                   = 512         # Specifying the memory our container requires
     cpu                      = 256         # Specifying the CPU our container requires
     execution_role_arn       = "${aws_iam_role.ecsTaskExecutionRole.arn}"
+    task_role_arn            = "${aws_iam_role.ecsTaskExecutionRole.arn}"
 }
 
 resource "aws_iam_role" "ecsTaskExecutionRole" {
@@ -41,7 +50,7 @@ resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
 resource "aws_ecs_service" "cs_ui_service" {
     name            = "cs-ui-service-${var.env}"                             # Naming our first service
     cluster         = local.ecs_cluster             # Referencing our created Cluster
-    task_definition = "${aws_ecs_task_definition.scp_cs_ui_task.arn}" # Referencing the task our service will spin up
+    task_definition = "${aws_ecs_task_definition.cs_ui_task.arn}" # Referencing the task our service will spin up
     launch_type     = "FARGATE"
     desired_count   = 1 # Setting the number of containers we want deployed to 1
     network_configuration {
@@ -126,6 +135,15 @@ resource "aws_lb_listener" "listener" {
     default_action {
         type             = "forward"
         target_group_arn = "${aws_lb_target_group.target_group.arn}" # Referencing our tagrte group
+    }
+}
+
+resource "aws_cloudwatch_log_group" "log-group" {
+    name = "cs-ui-logs-${var.env}"
+
+    tags = {
+        Application = var.app_name
+        Environment = var.env
     }
 }
 
