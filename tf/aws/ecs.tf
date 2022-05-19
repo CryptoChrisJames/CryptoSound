@@ -1,11 +1,19 @@
-resource "aws_ecs_task_definition" "scp_cs_ui_task" {
-    family                   = "scp-cs-ui-task-${var.env}" # Naming our first task
+resource "aws_ecs_task_definition" "cs_ui_task" {
+    family                   = "cs-ui-task-${var.env}" # Naming our first task
     container_definitions    = <<DEFINITION
     [
         {
-        "name": "scp-cs-ui-task-${var.env}",
+        "name": "cs-ui-task-${var.env}",
         "image": "${var.ecr_ui_repo_url}",
         "essential": true,
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+            "awslogs-group": "${aws_cloudwatch_log_group.log-group.id}",
+            "awslogs-region": "us-east-1",
+            "awslogs-stream-prefix": "${var.app_name}-${var.env}"
+            }
+        },
         "portMappings": [
             {
                 "containerPort": 80,
@@ -26,6 +34,7 @@ resource "aws_ecs_task_definition" "scp_cs_ui_task" {
     memory                   = 512         # Specifying the memory our container requires
     cpu                      = 256         # Specifying the CPU our container requires
     execution_role_arn       = "${aws_iam_role.ecsTaskExecutionRole.arn}"
+    task_role_arn            = "${aws_iam_role.ecsTaskExecutionRole.arn}"
 }
 
 resource "aws_iam_role" "ecsTaskExecutionRole" {
@@ -47,6 +56,15 @@ resource "aws_ecs_service" "cs_ui_service" {
     network_configuration {
         subnets = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}"]
         assign_public_ip = true
+    }
+}
+
+resource "aws_cloudwatch_log_group" "log-group" {
+    name = "cs-ui-logs-${var.env}"
+
+    tags = {
+        Application = var.app_name
+        Environment = var.app_environment
     }
 }
 
