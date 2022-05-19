@@ -7,13 +7,13 @@ env:
 phases:
   build:
     commands:
-      - export DOCKER_PUSH_URL=$ECR_URL:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      # - export DOCKER_PUSH_URL=$ECR_URL:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - export ECR_URI=${ECR_URL%/*}
       - cd ./src/CryptoSoundUI
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URI
       - docker build . -t cs-ui
-      - docker tag cs-ui $DOCKER_PUSH_URL
-      - docker push $DOCKER_PUSH_URL
+      - docker tag cs-ui $ECR_URL:latest
+      - docker push $ECR_URL:latest
 
 artifacts:
   files:
