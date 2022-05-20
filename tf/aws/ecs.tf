@@ -8,8 +8,48 @@ resource "aws_ecs_task_definition" "cs_ui_task" {
         "essential": true,
         "environment": [
             {
-                "name": "ENV_VARS",
-                "value": "${local.ecs_servcie_secrets}"
+                "name": "NUXT_ENV_CONTENTFUL_TOKEN",
+                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_CONTENTFUL_TOKEN"]}"
+            },
+            {
+                "name": "NUXT_ENV_ENVIRONMENT",
+                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_ENVIRONMENT"]}"
+            },
+            {
+                "name": "NUXT_ENV_CONTENTFUL_SPACE",
+                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_CONTENTFUL_SPACE"]}"
+            },
+            {
+                "name": "NUXT_ENV_CONTENTFUL_ENV",
+                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_CONTENTFUL_ENV"]}"
+            },
+            {
+                "name": "NUXT_ENV_FIREBASE_API_KEY",
+                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_API_KEY"]}"
+            },
+            {
+                "name": "NUXT_ENV_FIREBASE_AUTH_DOMAIN",
+                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_AUTH_DOMAIN"]}"
+            },
+            {
+                "name": "NUXT_ENV_FIREBASE_PROJECT_ID",
+                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_PROJECT_ID"]}"
+            },
+            {
+                "name": "NUXT_ENV_FIREBASE_STORAGE_BUCKET",
+                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_STORAGE_BUCKET"]}"
+            },
+            {
+                "name": "NUXT_ENV_FIREBASE_MESSAGING_SENDER_ID",
+                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_MESSAGING_SENDER_ID"]}"
+            },
+            {
+                "name": "NUXT_ENV_FIREBASE_APP_ID",
+                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_APP_ID"]}"
+            },
+            {
+                "name": "NUXT_ENV_FIREBASE_MEASUREMENT_ID",
+                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_MEASUREMENT_ID"]}"
             }
         ],
         "logConfiguration": {
@@ -172,4 +212,12 @@ resource "aws_default_subnet" "default_subnet_b" {
 locals {
     ecs_cluster = var.env == "prod" ? aws_ecs_cluster.scp_cluster_prod.id : var.env == "stage" ? aws_ecs_cluster.scp_cluster_stage.id : aws_ecs_cluster.scp_cluster_qa.id
     ecs_servcie_secrets = var.env == "qa" ? "arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q" : ""
+}
+
+data "aws_secretsmanager_secret" "cs_service_secrets" {
+    arn = local.ecs_servcie_secrets
+}
+
+data "aws_secretsmanager_secret_version" "current" {
+    secret_id = data.aws_secretsmanager_secret.cs_service_secrets.id
 }
