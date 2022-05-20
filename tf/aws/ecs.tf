@@ -24,15 +24,15 @@ resource "aws_ecs_task_definition" "cs_ui_task" {
                 "hostPort": 443
             }
         ],
-            "memory": 512,
-            "cpu": 256
-        },
         "secrets": [
             {
                 "name": "ENV_VARS",
                 "value": "${local.ecs_servcie_secrets}"
             }
         ]
+        "memory": 512,
+        "cpu": 256
+        },
     ]
     DEFINITION
     requires_compatibilities = ["FARGATE"] # Stating that we are using ECS Fargate
