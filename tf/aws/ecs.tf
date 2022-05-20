@@ -29,7 +29,7 @@ resource "aws_ecs_task_definition" "cs_ui_task" {
                 "name": "ENV_VARS",
                 "value": "${local.ecs_servcie_secrets}"
             }
-        ]
+        ],
         "memory": 512,
         "cpu": 256
         },
