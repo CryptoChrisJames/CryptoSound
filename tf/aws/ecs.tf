@@ -5,15 +5,13 @@ resource "aws_ecs_task_definition" "cs_ui_task" {
         {
             "name": "cs-ui-task-${var.env}",
             "image": "${var.ecr_ui_repo_url}",
-            "memory": 512,
-            "cpu": 256
             "essential": true,
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
-                "awslogs-group": "${aws_cloudwatch_log_group.log-group.id}",
-                "awslogs-region": "us-east-1",
-                "awslogs-stream-prefix": "${var.app_name}-${var.env}"
+                    "awslogs-group": "${aws_cloudwatch_log_group.log-group.id}",
+                    "awslogs-region": "us-east-1",
+                    "awslogs-stream-prefix": "${var.app_name}-${var.env}"
                 }
             },
             "portMappings": [
@@ -24,12 +22,6 @@ resource "aws_ecs_task_definition" "cs_ui_task" {
                 {
                     "containerPort": 443,
                     "hostPort": 443
-                }
-            ],
-            "environment": [
-                {
-                    "name": "ENV_VARS",
-                    "value": "${local.ecs_servcie_secrets}"
                 }
             ]
         },
