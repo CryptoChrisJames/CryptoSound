@@ -9,7 +9,7 @@ resource "aws_ecs_task_definition" "cs_ui_task" {
         "environment": [
             "name": "ENV_VARS",
             "value": "${local.ecs_servcie_secrets}"
-        ]
+        ],
         "logConfiguration": {
             "logDriver": "awslogs",
             "options": {
