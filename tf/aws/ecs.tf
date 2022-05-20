@@ -26,7 +26,13 @@ resource "aws_ecs_task_definition" "cs_ui_task" {
         ],
             "memory": 512,
             "cpu": 256
-        }
+        },
+        "secrets": [
+            {
+                "name": "ENV_VARS",
+                "value": "${ecs__servcie_secrets}"
+            }
+        ]
     ]
     DEFINITION
     requires_compatibilities = ["FARGATE"] # Stating that we are using ECS Fargate
@@ -165,4 +171,5 @@ resource "aws_default_subnet" "default_subnet_b" {
 
 locals {
     ecs_cluster = var.env == "prod" ? aws_ecs_cluster.scp_cluster_prod.id : var.env == "stage" ? aws_ecs_cluster.scp_cluster_stage.id : aws_ecs_cluster.scp_cluster_qa.id
+    ecs__servcie_secrets = var.env == "qa" ? "arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q" : ""
 }
