@@ -60,7 +60,7 @@ resource "aws_ecs_service" "cs_ui_service" {
     }
     load_balancer {
         target_group_arn = "${aws_lb_target_group.target_group.arn}" # Referencing our target group
-        container_name   = "${aws_ecs_task_definition.scp_cs_ui_task.family}"
+        container_name   = "${aws_ecs_task_definition.cs_ui_task.family}"
         container_port   = 80 # Specifying the container port
     }
 }
