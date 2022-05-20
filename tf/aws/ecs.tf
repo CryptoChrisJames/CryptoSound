@@ -30,7 +30,7 @@ resource "aws_ecs_task_definition" "cs_ui_task" {
         "secrets": [
             {
                 "name": "ENV_VARS",
-                "value": "${ecs__servcie_secrets}"
+                "value": "${local.ecs_servcie_secrets}"
             }
         ]
     ]
@@ -171,5 +171,5 @@ resource "aws_default_subnet" "default_subnet_b" {
 
 locals {
     ecs_cluster = var.env == "prod" ? aws_ecs_cluster.scp_cluster_prod.id : var.env == "stage" ? aws_ecs_cluster.scp_cluster_stage.id : aws_ecs_cluster.scp_cluster_qa.id
-    ecs__servcie_secrets = var.env == "qa" ? "arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q" : ""
+    ecs_servcie_secrets = var.env == "qa" ? "arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q" : ""
 }
