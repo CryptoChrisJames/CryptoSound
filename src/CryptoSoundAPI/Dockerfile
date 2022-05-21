@@ -6,4 +6,4 @@ RUN npm install
 COPY . /app
 EXPOSE 80
 EXPOSE 443
-CMD node api.js
+ENTRYPOINT [ "node", "api.js" ]
