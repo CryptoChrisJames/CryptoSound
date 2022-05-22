@@ -10,7 +10,7 @@ resource "aws_ecs_task_definition" "cs_api_task" {
             {
                 "name": "NODE_ENV",
                 "value": "${var.env}"
-            },
+            }
         ],
         "logConfiguration": {
             "logDriver": "awslogs",
