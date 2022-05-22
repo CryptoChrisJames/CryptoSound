@@ -10,7 +10,7 @@ phases:
       - export ECR_URI=${ECR_URL%/*}
       - cd ./src/CryptoSoundAPI
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URI
-      - docker build . -t cs-api
+      - docker build --build-arg PORT=$PORT . -t cs-api
       - docker tag cs-api $ECR_URL
       - docker push $ECR_URL
 

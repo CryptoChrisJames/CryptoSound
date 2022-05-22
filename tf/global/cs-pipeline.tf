@@ -145,6 +145,12 @@ resource "aws_codebuild_project" "cs_build_qa" {
             type = "PLAINTEXT"
             value = aws_ecr_repository.cs_api_container_repo_qa.repository_url
         }
+
+        environment_variable {
+            name = "PORT"
+            type = "PLAINTEXT"
+            value = var.cs_api_port
+        }
     }
 
     source {
