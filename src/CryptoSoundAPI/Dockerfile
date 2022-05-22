@@ -1,5 +1,5 @@
 FROM public.ecr.aws/docker/library/node:15.14.0-alpine
-RUN apt-get -y update
+RUN apk update && apk upgrade
 WORKDIR /app
 COPY package.json /app
 RUN npm install
