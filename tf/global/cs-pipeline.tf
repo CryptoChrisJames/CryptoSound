@@ -1,5 +1,5 @@
-resource "aws_codepipeline" "cs_pipeline_ui" {
-    name = "cs-pipeline-ui"
+resource "aws_codepipeline" "cs_pipeline" {
+    name = "cs-pipeline"
     role_arn = aws_iam_role.codepipeline_role.arn
 
     artifact_store {
@@ -39,7 +39,7 @@ resource "aws_codepipeline" "cs_pipeline_ui" {
                 version          = "1"
 
             configuration = {
-                ProjectName = aws_codebuild_project.cs_build_ui_qa.name
+                ProjectName = aws_codebuild_project.cs_build_qa.name
             }
         }
     }
@@ -56,7 +56,7 @@ resource "aws_codepipeline" "cs_pipeline_ui" {
                 version          = "1"
 
             configuration = {
-                ProjectName          = aws_codebuild_project.cs_deploy_ui_qa.name
+                ProjectName          = aws_codebuild_project.cs_deploy_qa.name
             }
         }
     }
@@ -116,9 +116,9 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
 EOF
 }
 
-resource "aws_codebuild_project" "cs_build_ui_qa" {
-    name          = "cs-build-ui-qa"
-    description   = "CodeBuild project for building CryptoSound UI"
+resource "aws_codebuild_project" "cs_build_qa" {
+    name          = "cs-build-qa"
+    description   = "CodeBuild project for building CryptoSound."
     build_timeout = "5"
     service_role  = "arn:aws:iam::482352589093:role/service-role/codebuild-terraform-global-service-role"
 
@@ -143,7 +143,7 @@ resource "aws_codebuild_project" "cs_build_ui_qa" {
         environment_variable {
             name = "ECR_URL"
             type = "PLAINTEXT"
-            value = aws_ecr_repository.cs_ui_container_repo_qa.repository_url
+            value = aws_ecr_repository.cs_api_container_repo_qa.repository_url
         }
     }
 
@@ -155,9 +155,9 @@ resource "aws_codebuild_project" "cs_build_ui_qa" {
     source_version = "main"
 }
 
-resource "aws_codebuild_project" "cs_deploy_ui_qa" {
-    name          = "cs-deploy-ui-qa"
-    description   = "CodeBuild project for building CryptoSound UI"
+resource "aws_codebuild_project" "cs_deploy_qa" {
+    name          = "cs-deploy-qa"
+    description   = "CodeBuild project for deploying CryptoSound."
     build_timeout = "5"
     service_role  = "arn:aws:iam::482352589093:role/service-role/codebuild-terraform-global-service-role"
 
@@ -182,7 +182,7 @@ resource "aws_codebuild_project" "cs_deploy_ui_qa" {
         environment_variable {
             name = "ECR_URL"
             type = "PLAINTEXT"
-            value = aws_ecr_repository.cs_ui_container_repo_qa.repository_url
+            value = aws_ecr_repository.cs_api_container_repo_qa.repository_url
         }
     }
 
@@ -194,8 +194,8 @@ resource "aws_codebuild_project" "cs_deploy_ui_qa" {
     source_version = "main"
 }
 
-resource "aws_ecr_repository" "cs_ui_container_repo_qa" {
-    name                 = "cs-ui-container-repo-qa"
+resource "aws_ecr_repository" "cs_api_container_repo_qa" {
+    name                 = "cs-api-container-repo-qa"
     image_tag_mutability = "MUTABLE"
 
     image_scanning_configuration {

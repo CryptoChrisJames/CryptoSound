@@ -1,57 +1,57 @@
-resource "aws_ecs_task_definition" "cs_ui_task" {
-    family                   = "cs-ui-task-${var.env}" # Naming our first task
+resource "aws_ecs_task_definition" "cs_api_task" {
+    family                   = "cs-api-task-${var.env}" # Naming our first task
     container_definitions    = <<DEFINITION
     [
         {
         "name": "cs-ui-task-${var.env}",
-        "image": "${var.ecr_ui_repo_url}",
+        "image": "${var.ecr_api_repo_url}",
         "essential": true,
-        "environment": [
-            {
-                "name": "NUXT_ENV_CONTENTFUL_TOKEN",
-                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_CONTENTFUL_TOKEN"]}"
-            },
-            {
-                "name": "NUXT_ENV_ENVIRONMENT",
-                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_ENVIRONMENT"]}"
-            },
-            {
-                "name": "NUXT_ENV_CONTENTFUL_SPACE",
-                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_CONTENTFUL_SPACE"]}"
-            },
-            {
-                "name": "NUXT_ENV_CONTENTFUL_ENV",
-                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_CONTENTFUL_ENV"]}"
-            },
-            {
-                "name": "NUXT_ENV_FIREBASE_API_KEY",
-                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_API_KEY"]}"
-            },
-            {
-                "name": "NUXT_ENV_FIREBASE_AUTH_DOMAIN",
-                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_AUTH_DOMAIN"]}"
-            },
-            {
-                "name": "NUXT_ENV_FIREBASE_PROJECT_ID",
-                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_PROJECT_ID"]}"
-            },
-            {
-                "name": "NUXT_ENV_FIREBASE_STORAGE_BUCKET",
-                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_STORAGE_BUCKET"]}"
-            },
-            {
-                "name": "NUXT_ENV_FIREBASE_MESSAGING_SENDER_ID",
-                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_MESSAGING_SENDER_ID"]}"
-            },
-            {
-                "name": "NUXT_ENV_FIREBASE_APP_ID",
-                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_APP_ID"]}"
-            },
-            {
-                "name": "NUXT_ENV_FIREBASE_MEASUREMENT_ID",
-                "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_MEASUREMENT_ID"]}"
-            }
-        ],
+        # "environment": [
+        #     {
+        #         "name": "NUXT_ENV_CONTENTFUL_TOKEN",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_CONTENTFUL_TOKEN"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_ENVIRONMENT",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_ENVIRONMENT"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_CONTENTFUL_SPACE",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_CONTENTFUL_SPACE"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_CONTENTFUL_ENV",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_CONTENTFUL_ENV"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_FIREBASE_API_KEY",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_API_KEY"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_FIREBASE_AUTH_DOMAIN",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_AUTH_DOMAIN"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_FIREBASE_PROJECT_ID",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_PROJECT_ID"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_FIREBASE_STORAGE_BUCKET",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_STORAGE_BUCKET"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_FIREBASE_MESSAGING_SENDER_ID",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_MESSAGING_SENDER_ID"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_FIREBASE_APP_ID",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_APP_ID"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_FIREBASE_MEASUREMENT_ID",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_MEASUREMENT_ID"]}"
+        #     }
+        # ],
         "logConfiguration": {
             "logDriver": "awslogs",
             "options": {
@@ -93,10 +93,10 @@ resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
     policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-resource "aws_ecs_service" "cs_ui_service" {
-    name            = "cs-ui-service-${var.env}"                             # Naming our first service
+resource "aws_ecs_service" "cs_api_service" {
+    name            = "cs-api-service-${var.env}"                             # Naming our first service
     cluster         = local.ecs_cluster             # Referencing our created Cluster
-    task_definition = "${aws_ecs_task_definition.cs_ui_task.arn}" # Referencing the task our service will spin up
+    task_definition = "${aws_ecs_task_definition.cs_api_task.arn}" # Referencing the task our service will spin up
     launch_type     = "FARGATE"
     desired_count   = 1 # Setting the number of containers we want deployed to 1
     network_configuration {
@@ -106,7 +106,7 @@ resource "aws_ecs_service" "cs_ui_service" {
     }
     load_balancer {
         target_group_arn = "${aws_lb_target_group.target_group.arn}" # Referencing our target group
-        container_name   = "${aws_ecs_task_definition.cs_ui_task.family}"
+        container_name   = "${aws_ecs_task_definition.cs_api_task.family}"
         container_port   = 80 # Specifying the container port
     }
 }

@@ -24,8 +24,3 @@ variable "poll_for_changes" {
     type        = string
     description = "CodePipeline variable for polling for changes."
 }
-
-variable "docker_key" {
-    type        = string
-    description = "Docker account access key."
-}
