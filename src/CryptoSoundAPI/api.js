@@ -1,13 +1,18 @@
 const { application } = require("express");
 const express = require("express");
+
+const env = process.env.NODE_ENV;
+
 const app = express();
 app.get('/', (req,res) => {
     res.send("hElLo WOrLd").status(200);
 });
 
-if(process.env.NODE_ENV == 'prod') {
+const currentPORT = () => {
+    if (env === "dev") {
+        return "8100";
+    }
+    return process.env.PORT;
+};
 
-} else {
-    app.listen(8100);
-    console.log('CS API is running.');
-}
+app.listen(currentPORT());
