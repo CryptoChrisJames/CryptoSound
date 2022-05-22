@@ -6,12 +6,52 @@ resource "aws_ecs_task_definition" "cs_api_task" {
         "name": "cs-ui-task-${var.env}",
         "image": "${var.ecr_api_repo_url}",
         "essential": true,
-        "environment": [
-            {
-                "name": "NODE_ENV",
-                "value": "${var.env}"
-            },
-        ],
+        # "environment": [
+        #     {
+        #         "name": "NUXT_ENV_CONTENTFUL_TOKEN",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_CONTENTFUL_TOKEN"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_ENVIRONMENT",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_ENVIRONMENT"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_CONTENTFUL_SPACE",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_CONTENTFUL_SPACE"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_CONTENTFUL_ENV",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_CONTENTFUL_ENV"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_FIREBASE_API_KEY",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_API_KEY"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_FIREBASE_AUTH_DOMAIN",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_AUTH_DOMAIN"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_FIREBASE_PROJECT_ID",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_PROJECT_ID"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_FIREBASE_STORAGE_BUCKET",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_STORAGE_BUCKET"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_FIREBASE_MESSAGING_SENDER_ID",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_MESSAGING_SENDER_ID"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_FIREBASE_APP_ID",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_APP_ID"]}"
+        #     },
+        #     {
+        #         "name": "NUXT_ENV_FIREBASE_MEASUREMENT_ID",
+        #         "value": "${jsondecode(data.aws_secretsmanager_secret_version.current.secret_string)["NUXT_ENV_FIREBASE_MEASUREMENT_ID"]}"
+        #     }
+        # ],
         "logConfiguration": {
             "logDriver": "awslogs",
             "options": {
