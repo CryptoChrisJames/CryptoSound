@@ -3,7 +3,7 @@ resource "aws_ecs_task_definition" "cs_api_task" {
     container_definitions    = <<DEFINITION
     [
         {
-        "name": "cs-ui-task-${var.env}",
+        "name": "cs-api-task-${var.env}",
         "image": "${var.ecr_api_repo_url}",
         "essential": true,
         "environment": [
@@ -145,7 +145,7 @@ resource "aws_lb_listener" "listener" {
 }
 
 resource "aws_cloudwatch_log_group" "log-group" {
-    name = "cs-ui-logs-${var.env}"
+    name = "cs-api-logs-${var.env}"
 
     tags = {
         Application = var.app_name
