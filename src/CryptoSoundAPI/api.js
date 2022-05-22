@@ -12,6 +12,7 @@ const currentPORT = () => {
     if (env === "dev") {
         return "8100";
     }
+    console.log(`CS API in ${process.env.NODE_ENV} now listening on port ${process.env.PORT}`);
     return process.env.PORT;
 };
 
