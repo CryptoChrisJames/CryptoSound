@@ -1,4 +1,4 @@
-FROM node:latest
+FROM public.ecr.aws/docker/library/node:15.14.0-alpine
 RUN apt-get -y update
 WORKDIR /app
 COPY package.json /app
