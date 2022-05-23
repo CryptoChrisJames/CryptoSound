@@ -169,6 +169,19 @@ resource "aws_default_subnet" "default_subnet_b" {
     availability_zone = "us-east-1b"
 }
 
+resource "aws_acm_certificate" "cs_cert" {
+    domain_name       = "*.crypto-sound.com"
+    validation_method = "DNS"
+
+    lifecycle {
+        create_before_destroy = true
+    }
+}
+
+resource "aws_lb_listener_certificate" "cs_listener_cert" {
+    listener_arn    = aws_lb_listener.listener.arn
+    certificate_arn = aws_acm_certificate.cs_cert.arn
+}
 locals {
     ecs_cluster = var.env == "prod" ? aws_ecs_cluster.scp_cluster_prod.id : var.env == "stage" ? aws_ecs_cluster.scp_cluster_stage.id : aws_ecs_cluster.scp_cluster_qa.id
     ecs_servcie_secrets = var.env == "qa" ? "arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q" : ""
