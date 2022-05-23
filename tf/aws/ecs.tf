@@ -24,6 +24,10 @@ resource "aws_ecs_task_definition" "cs_api_task" {
             {
                 "containerPort": 80,
                 "hostPort": 80
+            },
+            {
+                "containerPort": 443,
+                "hostPort": 443
             }
         ],
             "memory": 512,
@@ -83,6 +87,12 @@ resource "aws_security_group" "load_balancer_security_group" {
     ingress {
         from_port   = 80 # Allowing traffic in from port 80
         to_port     = 80
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"] # Allowing traffic in from all sources
+    }
+    ingress {
+        from_port   = 443 # Allowing traffic in from port 80
+        to_port     = 443
         protocol    = "tcp"
         cidr_blocks = ["0.0.0.0/0"] # Allowing traffic in from all sources
     }
