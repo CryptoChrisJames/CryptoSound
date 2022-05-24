@@ -24,11 +24,6 @@ provider "aws" {
     region  = "us-east-1"
 }
 
-provider "cloudflare" {
-    email   = var.cloudflare_email
-    api_key = var.cloudflare_key
-}
-
 resource "aws_ecs_cluster" "scp_cluster_qa" {
     name = "scp-cluster-qa"
 }
