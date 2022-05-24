@@ -152,7 +152,7 @@ resource "aws_lb_listener_rule" "host_based_routing" {
 
     action {
         type             = "forward"
-        target_group_arn = aws_lb_target_group.target_group
+        target_group_arn = aws_lb_target_group.target_group.arn
     }
 
     condition {
