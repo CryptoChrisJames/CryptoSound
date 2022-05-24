@@ -59,6 +59,8 @@ resource "aws_ecs_service" "cs_api_service" {
     task_definition = "${aws_ecs_task_definition.cs_api_task.arn}" # Referencing the task our service will spin up
     launch_type     = "FARGATE"
     desired_count   = 1 # Setting the number of containers we want deployed to 1
+    deployment_minimum_healthy_percent = 0
+    force_new_deployment = true
     network_configuration {
         subnets = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}"]
         assign_public_ip = true
@@ -138,16 +140,6 @@ resource "aws_lb_listener" "listener" {
     load_balancer_arn = "${aws_alb.application_load_balancer.arn}" # Referencing our load balancer
     port              = "80"
     protocol          = "HTTP"
-    default_action {
-        type             = "forward"
-        target_group_arn = "${aws_lb_target_group.target_group.arn}" # Referencing our tagrte group
-    }
-}
-
-resource "aws_lb_listener" "ssl_listener" {
-    load_balancer_arn = "${aws_alb.application_load_balancer.arn}" # Referencing our load balancer
-    port              = "443"
-    protocol          = "HTTPS"
     default_action {
         type             = "forward"
         target_group_arn = "${aws_lb_target_group.target_group.arn}" # Referencing our tagrte group
