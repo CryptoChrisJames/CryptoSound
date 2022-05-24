@@ -144,7 +144,7 @@ resource "aws_lb_listener" "listener" {
     }
 }
 
-resource "aws_lb_listener" "listener" {
+resource "aws_lb_listener" "ssl_listener" {
     load_balancer_arn = "${aws_alb.application_load_balancer.arn}" # Referencing our load balancer
     port              = "443"
     protocol          = "HTTPS"
