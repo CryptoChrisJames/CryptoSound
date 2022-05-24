@@ -146,6 +146,22 @@ resource "aws_lb_listener" "listener" {
     }
 }
 
+resource "aws_lb_listener_rule" "host_based_routing" {
+    listener_arn = aws_lb_listener.listener.arn
+    priority     = 100
+
+    action {
+        type             = "forward"
+        target_group_arn = aws_lb_target_group.target_group
+    }
+
+    condition {
+        host_header {
+            values = var.env == "prod" ? ["api.${var.site_domain}"] : ["${var.env}-api.${var.site_domain}"]
+        }
+    }
+}
+
 resource "aws_cloudwatch_log_group" "log-group" {
     name = "cs-api-logs-${var.env}"
 

@@ -66,7 +66,7 @@ resource "aws_codepipeline" "cs_pipeline" {
             name             = "Approve-QA"
             category         = "Approval"
             owner            = "AWS"
-            provider         = "CodeBuild"
+            provider         = "Manual"
             version          = "1"
         }
     }
@@ -110,7 +110,7 @@ resource "aws_codepipeline" "cs_pipeline" {
             name             = "Approve-Stage"
             category         = "Approval"
             owner            = "AWS"
-            provider         = "CodeBuild"
+            provider         = "Manual"
             version          = "1"
         }
     }
