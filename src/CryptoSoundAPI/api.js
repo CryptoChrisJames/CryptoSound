@@ -5,7 +5,7 @@ const env = process.env.NODE_ENV;
 
 const app = express();
 app.get('/', (req,res) => {
-    res.send("hElLo nEw WOrLd, aLl thE BoYs aNd GiRls! I'Ve gOt SoMe TrUe StoRiEs To TeLl! YoU'rE bAck OuTsIdE!").status(200);
+    res.send("hElLo nEw WOrLd, aLl thE BoYs aNd GiRls! I'Ve gOt SoMe TrUe StoRiEs To TeLl! YoU'rE bAck OuTsIdE! BuT, wE StIll LiEd!").status(200);
 });
 
 const currentPORT = () => {
