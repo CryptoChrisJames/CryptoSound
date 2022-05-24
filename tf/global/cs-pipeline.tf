@@ -72,33 +72,13 @@ resource "aws_codepipeline" "cs_pipeline" {
     }
 
     stage {
-        name = "Stage-Source"
-
-        action {
-            name             = "Stage-Source"
-            category         = "Source"
-            owner            = "ThirdParty"
-            provider         = "GitHub"
-            version          = "1"
-            output_artifacts = ["stage_code"]
-            configuration = {
-                OAuthToken           = var.github_token
-                Owner                = var.repo_owner
-                Repo                 = var.repo
-                Branch               = var.branch
-                PollForSourceChanges = var.poll_for_changes
-            }
-        }
-    }
-
-    stage {
         name = "Stage-Build"
             action {
                 name             = "Stage-Build"
                 category         = "Build"
                 owner            = "AWS"
                 provider         = "CodeBuild"
-                input_artifacts  = ["stage_code"]
+                input_artifacts  = ["code"]
                 output_artifacts = ["stage_build"]
                 version          = "1"
 
@@ -136,33 +116,13 @@ resource "aws_codepipeline" "cs_pipeline" {
     }
 
     stage {
-        name = "Prod-Source"
-
-        action {
-            name             = "Prod-Source"
-            category         = "Source"
-            owner            = "ThirdParty"
-            provider         = "GitHub"
-            version          = "1"
-            output_artifacts = ["prod_code"]
-            configuration = {
-                OAuthToken           = var.github_token
-                Owner                = var.repo_owner
-                Repo                 = var.repo
-                Branch               = var.branch
-                PollForSourceChanges = var.poll_for_changes
-            }
-        }
-    }
-
-    stage {
         name = "Prod-Build"
             action {
                 name             = "Prod-Build"
                 category         = "Build"
                 owner            = "AWS"
                 provider         = "CodeBuild"
-                input_artifacts  = ["prod_code"]
+                input_artifacts  = ["code"]
                 output_artifacts = ["prod_build"]
                 version          = "1"
 
