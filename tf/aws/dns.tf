@@ -19,7 +19,7 @@
 # }
 
 resource "cloudflare_record" "cs_api_cname" {
-    zone_id = data.cloudflare_zones.domain.zones[0].id
+    zone_id = data.cloudflare_zones.cs_domain.zones[0].id
     name    = var.env == "prod" ? "api" : "${var.env}-api"
     value   = aws_alb.application_load_balancer.dns_name
     type    = "CNAME"
@@ -29,7 +29,7 @@ resource "cloudflare_record" "cs_api_cname" {
 }
 
 resource "cloudflare_page_rule" "https" {
-    zone_id = data.cloudflare_zones.domain.zones[0].id
+    zone_id = data.cloudflare_zones.cs_domain.zones[0].id
     target  = "*.${var.site_domain}/*"
     actions {
         always_use_https = true
