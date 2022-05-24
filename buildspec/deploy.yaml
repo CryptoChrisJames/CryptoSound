@@ -15,7 +15,7 @@ phases:
 
   build:
     commands:
-      - export CURRENT_API_IMAGE=aws ecr describe-images --repository-name cs-api-container-repo-$ENV --query 'sort_by(imageDetails, &imagePushedAt)[-1]'
+      - export CURRENT_API_IMAGE=$(aws ecr describe-images --repository-name cs-api-container-repo-$ENV --query 'sort_by(imageDetails, &imagePushedAt)[-1]')
       - cd tf/aws
       - terraform init
       - TF_VAR_env=$ENV TF_VAR_ecr_api_repo_url=$ECR_URL TF_VAR_current_api_image_tag=CURRENT_API_IMAGE terraform apply -auto-approve
