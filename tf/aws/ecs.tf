@@ -188,7 +188,7 @@ resource "aws_default_subnet" "default_subnet_b" {
 }
 locals {
     ecs_cluster = var.env == "prod" ? aws_ecs_cluster.scp_cluster_prod.id : var.env == "stage" ? aws_ecs_cluster.scp_cluster_stage.id : aws_ecs_cluster.scp_cluster_qa.id
-    ecs_servcie_secrets = var.env == "qa" ? "arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q" : ""
+    ecs_servcie_secrets = var.env == "prod" ? "arn:aws:secretsmanager:us-east-1:482352589093:secret:prod-cs-config-9QASbT" : var.env == "stage" ? "arn:aws:secretsmanager:us-east-1:482352589093:secret:stage-cs-config-JCUy5N" : "arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q"
     current_api_image_tag = jsondecode(var.current_api_image_tag)["imageTags"][0]
 }
 
