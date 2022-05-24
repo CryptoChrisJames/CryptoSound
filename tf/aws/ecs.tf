@@ -4,7 +4,7 @@ resource "aws_ecs_task_definition" "cs_api_task" {
     [
         {
         "name": "cs-api-task-${var.env}",
-        "image": "${var.ecr_api_repo_url}:${data.aws_ecr_image.cs_api_image.image_tags[0]}",
+        "image": "${var.ecr_api_repo_url}:${var.current_api_image_tag}",
         "essential": true,
         "environment": [
             {

@@ -30,3 +30,8 @@ variable "site_domain" {
     description = "The domain of the site. "
     default     = "crypto-sound.com"
 }
+
+variable "current_api_image_tag" {
+    type        = string
+    description = "The current image tag for cs api repo"
+}

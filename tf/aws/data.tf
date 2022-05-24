@@ -14,8 +14,3 @@ data "cloudflare_zones" "cs_domain" {
         name = var.site_domain
     }
 }
-
-data "aws_ecr_image" "cs_api_image" {
-    repository_name = "cs-api-container-repo-${var.env}"
-    image_tag = "latest"
-}
