@@ -4,7 +4,7 @@ resource "aws_ecs_task_definition" "cs_api_task" {
     [
         {
         "name": "cs-api-task-${var.env}",
-        "image": "${var.ecr_api_repo_url}:${jsondecode(var.current_api_image_tag["imageTags"][0])}",
+        "image": "${var.ecr_api_repo_url}:${local.current_api_image_tag}",
         "essential": true,
         "environment": [
             {
@@ -173,6 +173,7 @@ resource "aws_default_subnet" "default_subnet_b" {
 locals {
     ecs_cluster = var.env == "prod" ? aws_ecs_cluster.scp_cluster_prod.id : var.env == "stage" ? aws_ecs_cluster.scp_cluster_stage.id : aws_ecs_cluster.scp_cluster_qa.id
     ecs_servcie_secrets = var.env == "qa" ? "arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q" : ""
+    current_api_image_tag = jsondecode(var.current_api_image_tag)["imageTags"][0]
 }
 
 data "aws_secretsmanager_secret" "cs_service_secrets" {
