@@ -5,7 +5,7 @@ variable "env" {
 
 variable "ecr_api_repo_url" {
     type        = string
-    description = "The URL that points to the current "
+    description = "The URL that points to the current ecr repo."
 }
 
 variable "app_name" {
@@ -16,8 +16,13 @@ variable "app_name" {
 
 variable "cloudflare_key" {
     type        = string
-    description = "Cloudflare API key"
+    description = "Cloudflare API key."
     default     = "cryptosound"
+}
+
+variable "cloudflare_email" {
+    type        = string
+    description = "Cloudflare email account."
 }
 
 variable "site_domain" {

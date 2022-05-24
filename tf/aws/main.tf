@@ -10,9 +10,9 @@ terraform {
             source  = "hashicorp/aws"
             version = "~> 3.27"
         }
-
         cloudflare = {
-            
+            source = "cloudflare/cloudflare"
+            version = "~> 3.0"
         }
     }
 
@@ -22,6 +22,11 @@ terraform {
 provider "aws" {
     profile = "default"
     region  = "us-east-1"
+}
+
+provider "cloudflare" {
+    email   = var.cloudflare_email
+    api_key = var.cloudflare_api_key
 }
 
 resource "aws_ecs_cluster" "scp_cluster_qa" {
