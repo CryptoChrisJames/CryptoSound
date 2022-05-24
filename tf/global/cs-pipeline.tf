@@ -35,7 +35,7 @@ resource "aws_codepipeline" "cs_pipeline" {
                 owner            = "AWS"
                 provider         = "CodeBuild"
                 input_artifacts  = ["code"]
-                output_artifacts = ["build"]
+                output_artifacts = ["qa_build"]
                 version          = "1"
 
             configuration = {
@@ -51,12 +51,139 @@ resource "aws_codepipeline" "cs_pipeline" {
                 category         = "Build"
                 owner            = "AWS"
                 provider         = "CodeBuild"
-                input_artifacts  = ["build"]
-                output_artifacts = ["deploy"]
+                input_artifacts  = ["qa_build"]
                 version          = "1"
 
             configuration = {
                 ProjectName          = aws_codebuild_project.cs_deploy_qa.name
+            }
+        }
+    }
+
+    stage {
+        name = "Approve-QA"
+        action {
+            name             = "Approve-QA"
+            category         = "Approval"
+            owner            = "AWS"
+            provider         = "CodeBuild"
+            version          = "1"
+        }
+    }
+
+    stage {
+        name = "Stage-Source"
+
+        action {
+            name             = "Stage-Source"
+            category         = "Source"
+            owner            = "ThirdParty"
+            provider         = "GitHub"
+            version          = "1"
+            output_artifacts = ["stage_code"]
+            configuration = {
+                OAuthToken           = var.github_token
+                Owner                = var.repo_owner
+                Repo                 = var.repo
+                Branch               = var.branch
+                PollForSourceChanges = var.poll_for_changes
+            }
+        }
+    }
+
+    stage {
+        name = "Stage-Build"
+            action {
+                name             = "Stage-Build"
+                category         = "Build"
+                owner            = "AWS"
+                provider         = "CodeBuild"
+                input_artifacts  = ["stage_code"]
+                output_artifacts = ["stage_build"]
+                version          = "1"
+
+            configuration = {
+                ProjectName = aws_codebuild_project.cs_build_stage.name
+            }
+        }
+    }
+
+    stage {
+        name = "Deploy-Stage"
+            action {
+                name             = "Deploy-Stage"
+                category         = "Build"
+                owner            = "AWS"
+                provider         = "CodeBuild"
+                input_artifacts  = ["stage_build"]
+                version          = "1"
+
+            configuration = {
+                ProjectName          = aws_codebuild_project.cs_deploy_stage.name
+            }
+        }
+    }
+
+    stage {
+        name = "Approve-Stage"
+        action {
+            name             = "Approve-Stage"
+            category         = "Approval"
+            owner            = "AWS"
+            provider         = "CodeBuild"
+            version          = "1"
+        }
+    }
+
+    stage {
+        name = "Prod-Source"
+
+        action {
+            name             = "Prod-Source"
+            category         = "Source"
+            owner            = "ThirdParty"
+            provider         = "GitHub"
+            version          = "1"
+            output_artifacts = ["prod_code"]
+            configuration = {
+                OAuthToken           = var.github_token
+                Owner                = var.repo_owner
+                Repo                 = var.repo
+                Branch               = var.branch
+                PollForSourceChanges = var.poll_for_changes
+            }
+        }
+    }
+
+    stage {
+        name = "Prod-Build"
+            action {
+                name             = "Prod-Build"
+                category         = "Build"
+                owner            = "AWS"
+                provider         = "CodeBuild"
+                input_artifacts  = ["prod_code"]
+                output_artifacts = ["prod_build"]
+                version          = "1"
+
+            configuration = {
+                ProjectName = aws_codebuild_project.cs_build_prod.name
+            }
+        }
+    }
+
+    stage {
+        name = "Deploy-Prod"
+            action {
+                name             = "Deploy-Prod"
+                category         = "Build"
+                owner            = "AWS"
+                provider         = "CodeBuild"
+                input_artifacts  = ["prod_build"]
+                version          = "1"
+
+            configuration = {
+                ProjectName          = aws_codebuild_project.cs_deploy_prod.name
             }
         }
     }
@@ -200,8 +327,193 @@ resource "aws_codebuild_project" "cs_deploy_qa" {
     source_version = "main"
 }
 
+resource "aws_codebuild_project" "cs_build_stage" {
+    name          = "cs-build-stage"
+    description   = "CodeBuild project for building CryptoSound."
+    build_timeout = "5"
+    service_role  = "arn:aws:iam::482352589093:role/service-role/codebuild-terraform-global-service-role"
+
+    artifacts {
+        type = "CODEPIPELINE"
+    }
+
+    environment {
+        compute_type                = "BUILD_GENERAL1_SMALL"
+        image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
+        type                        = "LINUX_CONTAINER"
+        image_pull_credentials_type = "CODEBUILD"
+
+        privileged_mode = true
+
+        environment_variable {
+            name = "ENV"
+            type = "PLAINTEXT"
+            value = "stage"
+        }
+
+        environment_variable {
+            name = "ECR_URL"
+            type = "PLAINTEXT"
+            value = aws_ecr_repository.cs_api_container_repo_stage.repository_url
+        }
+
+        environment_variable {
+            name = "PORT"
+            type = "PLAINTEXT"
+            value = var.cs_api_port
+        }
+    }
+
+    source {
+        type      = "CODEPIPELINE"
+        buildspec = "./buildspec/build.yaml"
+    }
+
+    source_version = "main"
+}
+
+resource "aws_codebuild_project" "cs_deploy_stage" {
+    name          = "cs-deploy-stage"
+    description   = "CodeBuild project for deploying CryptoSound."
+    build_timeout = "5"
+    service_role  = "arn:aws:iam::482352589093:role/service-role/codebuild-terraform-global-service-role"
+
+    artifacts {
+        type = "CODEPIPELINE"
+    }
+
+    environment {
+        compute_type                = "BUILD_GENERAL1_SMALL"
+        image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
+        type                        = "LINUX_CONTAINER"
+        image_pull_credentials_type = "CODEBUILD"
+
+        privileged_mode = true
+
+        environment_variable {
+            name = "ENV"
+            type = "PLAINTEXT"
+            value = "stage"
+        }
+
+        environment_variable {
+            name = "ECR_URL"
+            type = "PLAINTEXT"
+            value = aws_ecr_repository.cs_api_container_repo_stage.repository_url
+        }
+    }
+
+    source {
+        type      = "CODEPIPELINE"
+        buildspec = "./buildspec/deploy.yaml"
+    }
+
+    source_version = "main"
+}
+
+resource "aws_codebuild_project" "cs_build_prod" {
+    name          = "cs-build-prod"
+    description   = "CodeBuild project for building CryptoSound."
+    build_timeout = "5"
+    service_role  = "arn:aws:iam::482352589093:role/service-role/codebuild-terraform-global-service-role"
+
+    artifacts {
+        type = "CODEPIPELINE"
+    }
+
+    environment {
+        compute_type                = "BUILD_GENERAL1_SMALL"
+        image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
+        type                        = "LINUX_CONTAINER"
+        image_pull_credentials_type = "CODEBUILD"
+
+        privileged_mode = true
+
+        environment_variable {
+            name = "ENV"
+            type = "PLAINTEXT"
+            value = "prod"
+        }
+
+        environment_variable {
+            name = "ECR_URL"
+            type = "PLAINTEXT"
+            value = aws_ecr_repository.cs_api_container_repo_prod.repository_url
+        }
+
+        environment_variable {
+            name = "PORT"
+            type = "PLAINTEXT"
+            value = var.cs_api_port
+        }
+    }
+
+    source {
+        type      = "CODEPIPELINE"
+        buildspec = "./buildspec/build.yaml"
+    }
+
+    source_version = "main"
+}
+
+resource "aws_codebuild_project" "cs_deploy_prod" {
+    name          = "cs-deploy-prod"
+    description   = "CodeBuild project for deploying CryptoSound."
+    build_timeout = "5"
+    service_role  = "arn:aws:iam::482352589093:role/service-role/codebuild-terraform-global-service-role"
+
+    artifacts {
+        type = "CODEPIPELINE"
+    }
+
+    environment {
+        compute_type                = "BUILD_GENERAL1_SMALL"
+        image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
+        type                        = "LINUX_CONTAINER"
+        image_pull_credentials_type = "CODEBUILD"
+
+        privileged_mode = true
+
+        environment_variable {
+            name = "ENV"
+            type = "PLAINTEXT"
+            value = "prod"
+        }
+
+        environment_variable {
+            name = "ECR_URL"
+            type = "PLAINTEXT"
+            value = aws_ecr_repository.cs_api_container_repo_prod.repository_url
+        }
+    }
+
+    source {
+        type      = "CODEPIPELINE"
+        buildspec = "./buildspec/deploy.yaml"
+    }
+
+    source_version = "main"
+}
 resource "aws_ecr_repository" "cs_api_container_repo_qa" {
     name                 = "cs-api-container-repo-qa"
+    image_tag_mutability = "MUTABLE"
+
+    image_scanning_configuration {
+        scan_on_push = true
+    }
+}
+
+resource "aws_ecr_repository" "cs_api_container_repo_stage" {
+    name                 = "cs-api-container-repo-stage"
+    image_tag_mutability = "MUTABLE"
+
+    image_scanning_configuration {
+        scan_on_push = true
+    }
+}
+
+resource "aws_ecr_repository" "cs_api_container_repo_prod" {
+    name                 = "cs-api-container-repo-prod"
     image_tag_mutability = "MUTABLE"
 
     image_scanning_configuration {
