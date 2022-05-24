@@ -144,6 +144,16 @@ resource "aws_lb_listener" "listener" {
     }
 }
 
+resource "aws_lb_listener" "listener" {
+    load_balancer_arn = "${aws_alb.application_load_balancer.arn}" # Referencing our load balancer
+    port              = "443"
+    protocol          = "HTTPS"
+    default_action {
+        type             = "forward"
+        target_group_arn = "${aws_lb_target_group.target_group.arn}" # Referencing our tagrte group
+    }
+}
+
 resource "aws_cloudwatch_log_group" "log-group" {
     name = "cs-api-logs-${var.env}"
 
