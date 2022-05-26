@@ -23,6 +23,9 @@ provider "aws" {
     profile = "default"
     region  = "us-east-1"
 }
+provider "cloudflare" {
+    api_token = var.cloudflare_key
+}
 
 module "ecs" {
     source = "../../modules/ecs"
