@@ -33,6 +33,10 @@ module "ecs" {
     env = var.env
     ecr_api_repo_url = var.ecr_api_repo_url
     current_api_image_tag = var.current_api_image_tag
+
+    providers = {
+        aws = aws
+    }
 }
 
 module "dns" {
@@ -41,4 +45,8 @@ module "dns" {
     env = var.env
     cloudflare_key = var.cloudflare_key
     cloudflare_email = var.cloudflare_email
+
+    providers = {
+        cloudflare = cloudflare
+    }
 }
