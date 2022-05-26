@@ -1,7 +1,7 @@
 terraform {
     backend "s3" {
         bucket = "crypto-sound-terraform"
-        key = "cs-app-terraform-statefile.tfstate"
+        key = "cs-app-qa/cs-app-terraform-statefile-qa.tfstate"
         region = "us-east-1"
     }
 
@@ -24,14 +24,18 @@ provider "aws" {
     region  = "us-east-1"
 }
 
-resource "aws_ecs_cluster" "scp_cluster_qa" {
-    name = "scp-cluster-qa"
+module "ecs" {
+    source = "../../modules/ecs"
+
+    env = var.env
+    ecr_api_repo_url = var.ecr_api_repo_url
+    current_api_image_tag = var.current_api_image_tag
 }
 
-resource "aws_ecs_cluster" "scp_cluster_stage" {
-    name = "scp-cluster-stage"
-}
+module "dns" {
+    source = "../../modules/dns"
 
-resource "aws_ecs_cluster" "scp_cluster_prod" {
-    name = "scp-cluster-prod"
+    env = var.env
+    cloudflare_key = var.cloudflare_key
+    cloudflare_email = var.cloudflare_email
 }

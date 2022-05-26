@@ -8,9 +8,3 @@ data "aws_iam_policy_document" "assume_role_policy" {
         }
     }
 }
-
-data "cloudflare_zones" "cs_domain" {
-    filter {
-        name = var.site_domain
-    }
-}
