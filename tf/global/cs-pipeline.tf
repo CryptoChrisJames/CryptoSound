@@ -72,50 +72,6 @@ resource "aws_codepipeline" "cs_pipeline" {
     }
 
     stage {
-        name = "Stage-Build"
-            action {
-                name             = "Stage-Build"
-                category         = "Build"
-                owner            = "AWS"
-                provider         = "CodeBuild"
-                input_artifacts  = ["code"]
-                output_artifacts = ["stage_build"]
-                version          = "1"
-
-            configuration = {
-                ProjectName = aws_codebuild_project.cs_build_stage.name
-            }
-        }
-    }
-
-    stage {
-        name = "Deploy-Stage"
-            action {
-                name             = "Deploy-Stage"
-                category         = "Build"
-                owner            = "AWS"
-                provider         = "CodeBuild"
-                input_artifacts  = ["stage_build"]
-                version          = "1"
-
-            configuration = {
-                ProjectName          = aws_codebuild_project.cs_deploy_stage.name
-            }
-        }
-    }
-
-    stage {
-        name = "Approve-Stage"
-        action {
-            name             = "Approve-Stage"
-            category         = "Approval"
-            owner            = "AWS"
-            provider         = "Manual"
-            version          = "1"
-        }
-    }
-
-    stage {
         name = "Prod-Build"
             action {
                 name             = "Prod-Build"
@@ -287,90 +243,6 @@ resource "aws_codebuild_project" "cs_deploy_qa" {
     source_version = "main"
 }
 
-resource "aws_codebuild_project" "cs_build_stage" {
-    name          = "cs-build-stage"
-    description   = "CodeBuild project for building CryptoSound."
-    build_timeout = "5"
-    service_role  = "arn:aws:iam::482352589093:role/service-role/codebuild-terraform-global-service-role"
-
-    artifacts {
-        type = "CODEPIPELINE"
-    }
-
-    environment {
-        compute_type                = "BUILD_GENERAL1_SMALL"
-        image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
-        type                        = "LINUX_CONTAINER"
-        image_pull_credentials_type = "CODEBUILD"
-
-        privileged_mode = true
-
-        environment_variable {
-            name = "ENV"
-            type = "PLAINTEXT"
-            value = "stage"
-        }
-
-        environment_variable {
-            name = "ECR_URL"
-            type = "PLAINTEXT"
-            value = aws_ecr_repository.cs_api_container_repo_stage.repository_url
-        }
-
-        environment_variable {
-            name = "PORT"
-            type = "PLAINTEXT"
-            value = var.cs_api_port
-        }
-    }
-
-    source {
-        type      = "CODEPIPELINE"
-        buildspec = "./buildspec/build.yaml"
-    }
-
-    source_version = "main"
-}
-
-resource "aws_codebuild_project" "cs_deploy_stage" {
-    name          = "cs-deploy-stage"
-    description   = "CodeBuild project for deploying CryptoSound."
-    build_timeout = "5"
-    service_role  = "arn:aws:iam::482352589093:role/service-role/codebuild-terraform-global-service-role"
-
-    artifacts {
-        type = "CODEPIPELINE"
-    }
-
-    environment {
-        compute_type                = "BUILD_GENERAL1_SMALL"
-        image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
-        type                        = "LINUX_CONTAINER"
-        image_pull_credentials_type = "CODEBUILD"
-
-        privileged_mode = true
-
-        environment_variable {
-            name = "ENV"
-            type = "PLAINTEXT"
-            value = "stage"
-        }
-
-        environment_variable {
-            name = "ECR_URL"
-            type = "PLAINTEXT"
-            value = aws_ecr_repository.cs_api_container_repo_stage.repository_url
-        }
-    }
-
-    source {
-        type      = "CODEPIPELINE"
-        buildspec = "./buildspec/deploy.yaml"
-    }
-
-    source_version = "main"
-}
-
 resource "aws_codebuild_project" "cs_build_prod" {
     name          = "cs-build-prod"
     description   = "CodeBuild project for building CryptoSound."
@@ -456,15 +328,6 @@ resource "aws_codebuild_project" "cs_deploy_prod" {
 }
 resource "aws_ecr_repository" "cs_api_container_repo_qa" {
     name                 = "cs-api-container-repo-qa"
-    image_tag_mutability = "MUTABLE"
-
-    image_scanning_configuration {
-        scan_on_push = true
-    }
-}
-
-resource "aws_ecr_repository" "cs_api_container_repo_stage" {
-    name                 = "cs-api-container-repo-stage"
     image_tag_mutability = "MUTABLE"
 
     image_scanning_configuration {
