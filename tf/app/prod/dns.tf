@@ -21,7 +21,7 @@
 resource "cloudflare_record" "cs_api_cname" {
     zone_id = data.cloudflare_zones.cs_domain.zones[0].id
     name    = var.env == "prod" ? "api" : "${var.env}-api"
-    value   = aws_alb.application_load_balancer.dns_name
+    value   = ecs.output.load_balancer_dns_name
     type    = "CNAME"
 
     ttl     = 1

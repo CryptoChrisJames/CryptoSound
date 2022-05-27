@@ -154,7 +154,7 @@ resource "aws_cloudwatch_log_group" "log-group" {
     name = "cs-api-logs-${var.env}"
 
     tags = {
-        Application = var.app_name
+        Application = "cs-api-${var.env}"
         Environment = var.env
     }
 }
