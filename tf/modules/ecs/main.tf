@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "cs_api_task" {
             "options": {
             "awslogs-group": "${aws_cloudwatch_log_group.log-group.id}",
             "awslogs-region": "us-east-1",
-            "awslogs-stream-prefix": "${var.app_name}-${var.env}"
+            "awslogs-stream-prefix": "cs-api-${var.env}"
             }
         },
         "portMappings": [
