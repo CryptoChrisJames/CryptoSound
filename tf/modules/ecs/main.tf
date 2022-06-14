@@ -58,8 +58,8 @@ resource "aws_ecs_cluster" "scp_cluster" {
 }
 
 resource "aws_ecs_service" "cs_api_service" {
-    name            = "cs-api-service-${var.env}"                             # Naming our first service
-    cluster         = scp_cluster.id           # Referencing our created Cluster
+    name            = "cs-api-service-${var.env}"        # Naming our first service
+    cluster         = aws_ecs_cluster.scp_cluster.id           # Referencing our created Cluster
     task_definition = "${aws_ecs_task_definition.cs_api_task.arn}" # Referencing the task our service will spin up
     launch_type     = "FARGATE"
     desired_count   = 1 # Setting the number of containers we want deployed to 1
