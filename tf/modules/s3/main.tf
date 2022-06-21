@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "ui_build_bucket" {
-    bucket = "cryptosound/${var.env}/ui"
+    bucket = "cryptosound-ui"
 }
 
 resource "aws_s3_bucket_acl" "ui_build_bucket_acl" {
