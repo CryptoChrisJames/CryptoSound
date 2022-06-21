@@ -14,6 +14,8 @@ phases:
       - docker build --build-arg PORT=$PORT . -t cs-api
       - docker tag cs-api $DOCKER_PUSH_URL
       - docker push $DOCKER_PUSH_URL
+      - cd ../../src/CryptoSoundUI
+      - npm run generate 
 
 artifacts:
   files:

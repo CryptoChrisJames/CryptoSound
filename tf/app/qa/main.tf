@@ -31,3 +31,9 @@ module "ecs" {
     ecr_api_repo_url = var.ecr_api_repo_url
     current_api_image_tag = var.current_api_image_tag
 }
+
+module "s3" {
+    source = "../../modules/s3"
+
+    env = var.env
+}
