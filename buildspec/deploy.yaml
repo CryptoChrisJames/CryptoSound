@@ -22,4 +22,4 @@ phases:
       - TF_VAR_env=$ENV TF_VAR_ecr_api_repo_url=$ECR_URL TF_VAR_current_api_image_tag=$CURRENT_API_IMAGE terraform apply -auto-approve
       - cd ../../../src/CryptoSoundUI/dist
       # - S3_URL=(aws s3 presign s3://cryptosound/$ENV/ui/)
-      - aws s3 cp . s3://cryptosound-ui/$ENV/ --recursive
+      - aws s3 cp . s3://cryptosound-ui-$ENV/ --recursive
