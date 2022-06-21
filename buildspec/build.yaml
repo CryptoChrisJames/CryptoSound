@@ -15,6 +15,7 @@ phases:
       - docker tag cs-api $DOCKER_PUSH_URL
       - docker push $DOCKER_PUSH_URL
       - cd ../../src/CryptoSoundUI
+      - npm install
       - npm run generate 
 
 artifacts:
