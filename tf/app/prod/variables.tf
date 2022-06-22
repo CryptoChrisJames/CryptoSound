@@ -35,3 +35,13 @@ variable "site_domain" {
     description = "The domain of the site. "
     default     = "crypto-sound.com"
 }
+
+variable "AWS_ID" {
+    type        = string
+    description = "AWS authentication ID."
+}
+
+variable "AWS_SECRET" {
+    type        = string
+    description = "AWS authentication secret."
+}
