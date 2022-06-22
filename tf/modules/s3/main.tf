@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "ui_build_bucket" {
-    bucket = "cryptosound-ui-${var.env}"
+    bucket = var.env == "prod" ? "crypto-sound.com" : "${var.env}.crypto-sound.com"
 }
 
 resource "aws_s3_bucket_acl" "ui_build_bucket_acl" {
@@ -30,7 +30,7 @@ resource "aws_s3_bucket" "s3_bucket_ui_policy" {
             "Effect":"Allow",
             "Principal": "*",
             "Action":["s3:GetObject"],
-            "Resource":["arn:aws:s3:::cryptosound-ui-${var.env}/*"]
+            "Resource":["${aws_s3_bucket.ui_build_bucket.arn}"]
     }
   ]
 }
