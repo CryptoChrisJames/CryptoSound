@@ -19,7 +19,7 @@ resource "aws_s3_bucket_website_configuration" "ui_web_hosting" {
     }
 }
 
-resource "aws_s3_bucket" "s3_bucket_ui_policy" {
+resource "aws_s3_bucket_policy" "s3_bucket_ui_policy" {
     bucket = aws_s3_bucket.ui_build_bucket.id
     policy = <<EOF
 {

@@ -53,7 +53,7 @@ resource "aws_s3_bucket_website_configuration" "www_redirection" {
     }
 }
 
-resource "aws_s3_bucket" "s3_bucket_ui_redirect_policy" {
+resource "aws_s3_bucket_policy" "s3_bucket_ui_redirect_policy" {
     bucket = aws_s3_bucket.www_bucket.id
     policy = <<EOF
 {
