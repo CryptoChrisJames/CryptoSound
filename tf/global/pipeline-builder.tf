@@ -8,7 +8,7 @@ terraform {
     required_providers {
         aws = {
             source  = "hashicorp/aws"
-            version = "~> 4.4"
+            version = "~> 4.19.0"
         }
     }
 
@@ -16,8 +16,9 @@ terraform {
 }
 
 provider "aws" {
-    profile = "default"
     region  = "us-east-1"
+    access_key = var.AWS_ID
+    secret_key = var.AWS_SECRET
 }
 
 resource "aws_codebuild_project" "cs-pipeline-builder" {

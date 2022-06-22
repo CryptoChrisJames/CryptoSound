@@ -30,3 +30,13 @@ variable "poll_for_changes" {
     type        = string
     description = "CodePipeline variable for polling for changes."
 }
+
+variable "AWS_ID" {
+    type        = string
+    description = "AWS authentication ID."
+}
+
+variable "AWS_SECRET" {
+    type        = string
+    description = "AWS authentication secret."
+}
