@@ -3,17 +3,6 @@ version: 0.2
 env:
   secrets-manager:
     TF_VAR_github_token: arn:aws:secretsmanager:us-east-1:482352589093:secret:scp-github-access-token-wl0bYW:TF_VAR_github_token
-    NUXT_ENV_CONTENTFUL_TOKEN: arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q:NUXT_ENV_CONTENTFUL_TOKEN
-    NUXT_ENV_ENVIRONMENT: arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q:NUXT_ENV_ENVIRONMENT
-    NUXT_ENV_CONTENTFUL_SPACE: arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q:NUXT_ENV_CONTENTFUL_SPACE
-    NUXT_ENV_CONTENTFUL_ENV: arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q:NUXT_ENV_CONTENTFUL_ENV
-    NUXT_ENV_FIREBASE_API_KEY: arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q:NUXT_ENV_FIREBASE_API_KEY
-    NUXT_ENV_FIREBASE_AUTH_DOMAIN: arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q:NUXT_ENV_FIREBASE_AUTH_DOMAIN
-    NUXT_ENV_FIREBASE_PROJECT_ID: arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q:NUXT_ENV_FIREBASE_PROJECT_ID
-    NUXT_ENV_FIREBASE_STORAGE_BUCKET: arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q:NUXT_ENV_FIREBASE_STORAGE_BUCKET
-    NUXT_ENV_FIREBASE_MESSAGING_SENDER_ID: arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q:NUXT_ENV_FIREBASE_MESSAGING_SENDER_ID
-    NUXT_ENV_FIREBASE_APP_ID: arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q:NUXT_ENV_FIREBASE_APP_ID
-    NUXT_ENV_FIREBASE_MEASUREMENT_ID: arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q:NUXT_ENV_FIREBASE_MEASUREMENT_ID
 
 phases:
   build:

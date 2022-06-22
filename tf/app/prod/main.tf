@@ -31,3 +31,42 @@ module "ecs" {
     ecr_api_repo_url = var.ecr_api_repo_url
     current_api_image_tag = var.current_api_image_tag
 }
+
+module "s3" {
+    source = "../../modules/s3"
+
+    env = var.env
+    bucket_name = "crypto-sound.com"
+}
+
+# Need to add an extra S3 bucket to redirect to our main site.
+resource "aws_s3_bucket" "www_bucket" {
+    bucket = "www.crypto-sound.com"
+    acl = "public-read"
+}
+
+resource "aws_s3_bucket_website_configuration" "www_redirection" {
+    bucket = aws_s3_bucket.www_bucket.bucket
+
+    redirect_all_requests_to = {
+        host_name = "https://crypto-sound.com"
+    }
+}
+
+resource "aws_s3_bucket" "s3_bucket_ui_redirect_policy" {
+    bucket = aws_s3_bucket.www_bucket.id
+    policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid":"PublicReadGetObject",
+            "Effect":"Allow",
+            "Principal": "*",
+            "Action":["s3:GetObject"],
+            "Resource":["${aws_s3_bucket.www_bucket.arn}", "${aws_s3_bucket.www_bucket.arn}/*"]
+    }
+  ]
+}
+EOF
+}

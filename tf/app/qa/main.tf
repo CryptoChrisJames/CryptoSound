@@ -36,4 +36,5 @@ module "s3" {
     source = "../../modules/s3"
 
     env = var.env
+    bucket_name = "crypto-sound.com"
 }

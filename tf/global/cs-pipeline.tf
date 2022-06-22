@@ -194,6 +194,72 @@ resource "aws_codebuild_project" "cs_build_qa" {
             type = "PLAINTEXT"
             value = var.cs_api_port
         }
+
+        environment_variable {
+            name = "NUXT_ENV_CONTENTFUL_TOKEN"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.qa_build_secret_version.secret_string)["NUXT_ENV_ENVIRONMENT"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_ENVIRONMENT"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.qa_build_secret_version.secret_string)["NUXT_ENV_CONTENTFUL_TOKEN"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_CONTENTFUL_SPACE"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.qa_build_secret_version.secret_string)["NUXT_ENV_CONTENTFUL_SPACE"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_CONTENTFUL_ENV"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.qa_build_secret_version.secret_string)["NUXT_ENV_CONTENTFUL_ENV"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_FIREBASE_API_KEY"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.qa_build_secret_version.secret_string)["NUXT_ENV_FIREBASE_API_KEY"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_FIREBASE_AUTH_DOMAIN"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.qa_build_secret_version.secret_string)["NUXT_ENV_FIREBASE_AUTH_DOMAIN"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_FIREBASE_PROJECT_ID"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.qa_build_secret_version.secret_string)["NUXT_ENV_FIREBASE_PROJECT_ID"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_FIREBASE_STORAGE_BUCKET"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.qa_build_secret_version.secret_string)["NUXT_ENV_FIREBASE_STORAGE_BUCKET"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_FIREBASE_MESSAGING_SENDER_ID"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.qa_build_secret_version.secret_string)["NUXT_ENV_FIREBASE_MESSAGING_SENDER_ID"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_FIREBASE_APP_ID"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.qa_build_secret_version.secret_string)["NUXT_ENV_FIREBASE_APP_ID"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_FIREBASE_MEASUREMENT_ID"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.qa_build_secret_version.secret_string)["NUXT_ENV_FIREBASE_MEASUREMENT_ID"]}"
+        }
     }
 
     source {
@@ -278,6 +344,72 @@ resource "aws_codebuild_project" "cs_build_prod" {
             type = "PLAINTEXT"
             value = var.cs_api_port
         }
+
+        environment_variable {
+            name = "NUXT_ENV_CONTENTFUL_TOKEN"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.prod_build_secret_version.secret_string)["NUXT_ENV_ENVIRONMENT"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_ENVIRONMENT"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.prod_build_secret_version.secret_string)["NUXT_ENV_CONTENTFUL_TOKEN"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_CONTENTFUL_SPACE"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.prod_build_secret_version.secret_string)["NUXT_ENV_CONTENTFUL_SPACE"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_CONTENTFUL_ENV"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.prod_build_secret_version.secret_string)["NUXT_ENV_CONTENTFUL_ENV"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_FIREBASE_API_KEY"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.prod_build_secret_version.secret_string)["NUXT_ENV_FIREBASE_API_KEY"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_FIREBASE_AUTH_DOMAIN"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.prod_build_secret_version.secret_string)["NUXT_ENV_FIREBASE_AUTH_DOMAIN"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_FIREBASE_PROJECT_ID"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.prod_build_secret_version.secret_string)["NUXT_ENV_FIREBASE_PROJECT_ID"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_FIREBASE_STORAGE_BUCKET"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.prod_build_secret_version.secret_string)["NUXT_ENV_FIREBASE_STORAGE_BUCKET"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_FIREBASE_MESSAGING_SENDER_ID"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.prod_build_secret_version.secret_string)["NUXT_ENV_FIREBASE_MESSAGING_SENDER_ID"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_FIREBASE_APP_ID"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.prod_build_secret_version.secret_string)["NUXT_ENV_FIREBASE_APP_ID"]}"
+        }
+
+        environment_variable {
+            name = "NUXT_ENV_FIREBASE_MEASUREMENT_ID"
+            type = "PLAINTEXT"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.prod_build_secret_version.secret_string)["NUXT_ENV_FIREBASE_MEASUREMENT_ID"]}"
+        }
     }
 
     source {
@@ -342,4 +474,20 @@ resource "aws_ecr_repository" "cs_api_container_repo_prod" {
     image_scanning_configuration {
         scan_on_push = true
     }
+}
+
+data "aws_secretsmanager_secret" "qa_build_secret" {
+    arn = "arn:aws:secretsmanager:us-east-1:482352589093:secret:qa-cs-config-bNTQ2q"
+}
+
+data "aws_secretsmanager_secret_version" "qa_build_secret_version" {
+    secret_id = data.aws_secretsmanager_secret.qa_build_secret.id
+}
+
+data "aws_secretsmanager_secret" "prod_build_secrets" {
+    arn = "arn:aws:secretsmanager:us-east-1:482352589093:secret:prod-cs-config-9QASbT"
+}
+
+data "aws_secretsmanager_secret_version" "prod_build_secret_version" {
+    secret_id = data.aws_secretsmanager_secret.prod_build_secrets.id
 }
