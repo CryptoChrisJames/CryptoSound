@@ -198,13 +198,13 @@ resource "aws_codebuild_project" "cs_build_qa" {
         environment_variable {
             name = "NUXT_ENV_CONTENTFUL_TOKEN"
             type = "PLAINTEXT"
-            value = "${jsondecode(data.aws_secretsmanager_secret_version.qa_build_secret_version.secret_string)["NUXT_ENV_ENVIRONMENT"]}"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.qa_build_secret_version.secret_string)["NUXT_ENV_CONTENTFUL_TOKEN"]}"
         }
 
         environment_variable {
             name = "NUXT_ENV_ENVIRONMENT"
             type = "PLAINTEXT"
-            value = "${jsondecode(data.aws_secretsmanager_secret_version.qa_build_secret_version.secret_string)["NUXT_ENV_CONTENTFUL_TOKEN"]}"
+            value = "${jsondecode(data.aws_secretsmanager_secret_version.qa_build_secret_version.secret_string)["NUXT_ENV_ENVIRONMENT"]}"
         }
 
         environment_variable {
