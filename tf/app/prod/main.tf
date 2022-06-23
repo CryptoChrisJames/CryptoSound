@@ -50,7 +50,7 @@ resource "aws_s3_bucket_website_configuration" "www_redirection" {
     bucket = aws_s3_bucket.www_bucket.bucket
 
     redirect_all_requests_to {
-        host_name = "https://crypto-sound.com"
+        host_name = "crypto-sound.com"
     }
 }
 
