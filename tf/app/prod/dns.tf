@@ -28,13 +28,13 @@ resource "cloudflare_record" "cs_api_cname" {
     proxied = true
 }
 
-resource "cloudflare_page_rule" "https" {
-    zone_id = data.cloudflare_zones.cs_domain.zones[0].id
-    target  = "*.${var.site_domain}/*"
-    actions {
-        always_use_https = true
-    }
-}
+# resource "cloudflare_page_rule" "https" {
+#     zone_id = data.cloudflare_zones.cs_domain.zones[0].id
+#     target  = "*.${var.site_domain}/*"
+#     actions {
+#         always_use_https = true
+#     }
+# }
 
 data "cloudflare_zones" "cs_domain" {
     filter {
