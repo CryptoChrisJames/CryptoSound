@@ -1,5 +1,5 @@
 resource "cloudflare_record" "cs_prod_ui_cname" {
-    zone_id = data.cloudflare_zones.domain.zones[0].id
+    zone_id = data.cloudflare_zones.cs_domain.zones[0].id
     name    = var.site_domain
     value   = module.s3.ui_endpoint
     type    = "CNAME"
@@ -9,7 +9,7 @@ resource "cloudflare_record" "cs_prod_ui_cname" {
 }
 
 resource "cloudflare_record" "cs_prod_ui_www" {
-    zone_id = data.cloudflare_zones.domain.zones[0].id
+    zone_id = data.cloudflare_zones.cs_domain.zones[0].id
     name    = "www"
     value   = aws_s3_bucket_website_configuration.www_redirection.website_endpoint
     type    = "CNAME"
