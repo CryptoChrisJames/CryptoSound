@@ -6,6 +6,7 @@ export const state = () => ({
     videoHeaderLink: '',
     promotions: [],
     collections: [],
+    raw: ''
 });
 
 export const mutations = {
@@ -15,6 +16,7 @@ export const mutations = {
         state.videoHeaderLink = payload.videoHeaderLink,
         state.promotions = payload.promotions;
         state.collections = payload.collections;
+        state.raw = payload.raw;
     },
 };
 
@@ -30,6 +32,7 @@ export const actions = {
             videoHeaderLink: videoHeaderLinks[0].link,
             promotions: contentfulHelper.parsePromotions(promotionalCollections),
             collections: contentfulHelper.parseCollections(collections.items),
+            raw: collections,
         };
 
         commit('setAppContent', appContent);

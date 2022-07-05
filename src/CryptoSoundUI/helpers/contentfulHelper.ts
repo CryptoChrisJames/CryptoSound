@@ -1,5 +1,3 @@
-import { uuid } from 'vue-uuid';
-
 const parsePromotions = (promotions: Array<any>): any => {
     return promotions.map((p) => {
         return {
@@ -14,7 +12,7 @@ const parsePromotions = (promotions: Array<any>): any => {
 const parseCollections = (collections: Array<any>): any => {
     return collections.map((c) => {
         return {
-            id: uuid.v4(),
+            id: c.fields.productId.id,
             name: c.fields.name,
             creator: c.fields.collectionCreator,
             type: c.fields.collectionType,
@@ -23,8 +21,7 @@ const parseCollections = (collections: Array<any>): any => {
             digitalAsset: c.fields.digitalAsset.fields.file.url,
             promotionalDescription: c.fields.promotionalDescription.content[0].content[0].value,
             tracks: parseTracks(c.fields.tracks),
-            price: c.fields.price,
-            productId: c.fields.productId.id
+            price: c.fields.price
         };
     });
 };
@@ -32,11 +29,10 @@ const parseCollections = (collections: Array<any>): any => {
 const parseTracks = (tracks: Array<any>): any => {
     return tracks.map((t) => {
         return {
-            id: uuid.v4(),
+            id: t.fields.productId.id,
             name: t.fields.name,
             url: t.fields.file.fields.file.url,
-            price: t.fields.price,
-            productId: t.fields.productId.id
+            price: t.fields.price
         };
     });
 };
